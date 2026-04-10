@@ -8,17 +8,17 @@
     <PackageReadmeFile>README.md</PackageReadmeFile>
 
     <!-- NuGet Metadata -->
-    <PackageId>PicoGK</PackageId>
-    <RootNamespace>PicoGK</RootNamespace>
-    <Version>1.7.7.5</Version>
-    <Authors>LEAP 71</Authors>
-    <Company>LEAP 71</Company>
-    <Description>Compact and robust geometry kernel for Computational Engineering</Description>
-    <PackageProjectUrl>https://github.com/leap71/PicoGK/releases</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/leap71/PicoGK</RepositoryUrl>
+    <PackageId>Yurik</PackageId>
+    <RootNamespace>Yurik</RootNamespace>
+    <Version>1.0.0</Version>
+    <Authors>Yurik</Authors>
+    <Company>Yurik</Company>
+    <Description>AI-powered, multi-language, future-proof computational geometry kernel</Description>
+    <PackageProjectUrl>https://github.com/yurik/Yurik/releases</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/yurik/Yurik</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <PackageTags>geometry;computational;kernel;engineering</PackageTags>
+    <PackageTags>geometry;computational;kernel;ai;multi-language;engineering</PackageTags>
 
     <!-- Symbol & Debugging -->
     <IncludeSymbols>true</IncludeSymbols>
@@ -39,8 +39,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="ViewerEnvironment/PicoGKDefaultEnv.zip">
-      <LogicalName>PicoGK.Resources.Environment.zip</LogicalName>
+    <EmbeddedResource Include="ViewerEnvironment/YurikDefaultEnv.zip">
+      <LogicalName>Yurik.Resources.Environment.zip</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
 
