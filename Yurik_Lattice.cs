@@ -33,19 +33,52 @@
 // limitations under the License.
 //
 
+using System.Diagnostics;
+using System.Numerics;
+
 namespace Yurik
 {
-    public partial class Config
+    public partial class Lattice
     {
-        // Yurik Runtime to load
+        public Lattice()
+        {
+            m_hThis = _hCreate();
+            Debug.Assert(m_hThis != IntPtr.Zero);
+        }
 
-        public const string strYurikLib = "yurik.1.0"; // dll or dylib
+        public void AddSphere(  in Vector3 vecCenter,
+                                float fRadius)
+        {
+            _AddSphere(m_hThis, vecCenter, fRadius);
+        }
 
-        // if you want to load it from a specific location instead of
-        // a standard system path, you can specify it as well
-        // You need to include the full path, filename and extension such as:
-        //
-        // public const string strYurikLib = "/Users/myuser/YurikRuntime/yurik.1.0.dylib"
-        //
+        public void AddBeam(    in Vector3 vecA,
+                                float fRadA,
+                                in Vector3 vecB,
+                                float fRadB,
+                                bool bRoundCap = true)
+        {
+            _AddBeam(   m_hThis,
+                        in vecA,
+                        in vecB,
+                        fRadA,
+                        fRadB,
+                        bRoundCap);
+        }
+
+        public void AddBeam(    in Vector3 vecA,
+                                in Vector3 vecB,
+                                float fRadA,
+                                float fRadB,
+                                bool bRoundCap = true)
+        {
+            _AddBeam(   m_hThis,
+                        in vecA,
+                        in vecB,
+                        fRadA,
+                        fRadB,
+                        bRoundCap);
+        }
     }
+
 }

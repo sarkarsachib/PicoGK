@@ -33,19 +33,46 @@
 // limitations under the License.
 //
 
+using System.Runtime.InteropServices;
+
 namespace Yurik
 {
-    public partial class Config
+    // Note these classes define the memory layout to be compatible with
+    // the Yurik C++ types. Do not add data members to these classes, even
+    // if they are defined as "partial" to be extended with additional methods 
+
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public partial struct Coord
     {
-        // Yurik Runtime to load
+        public int X;
+        public int Y;
+        public int Z;
 
-        public const string strYurikLib = "yurik.1.0"; // dll or dylib
+        public Coord(   int x,
+                        int y,
+                        int z)
+        {
+            this.X = x;
+            this.Y = y;
+            this.Z = z;
+        }
+    }
 
-        // if you want to load it from a specific location instead of
-        // a standard system path, you can specify it as well
-        // You need to include the full path, filename and extension such as:
-        //
-        // public const string strYurikLib = "/Users/myuser/YurikRuntime/yurik.1.0.dylib"
-        //
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
+    public partial struct Triangle
+    {
+        public int A;
+        public int B;
+        public int C;
+
+        public Triangle(    int a,
+                            int b,
+                            int c)
+        {
+            this.A = a;
+            this.B = b;
+            this.C = c;
+        }
     }
 }
+
