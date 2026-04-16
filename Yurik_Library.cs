@@ -110,15 +110,15 @@ namespace Yurik
         /// library cannot be found, folders, etc. cannot be created, etc.
         /// Always handle the exception to understand what's going on.
         /// </exception>
-        public static void Go(  float _fVoxelSizeMM,
+        public static void Go(float _fVoxelSizeMM,
                                 ThreadStart fnTask,
-                                string strLogFolder     = "",
-                                string strLogFileName   = "",
-                                string strSrcFolder     = "",
-                                string strLightsFile    = "",
-                                bool bEndAppWithTask    = false)
+                                string strLogFolder = "",
+                                string strLogFileName = "",
+                                string strSrcFolder = "",
+                                string strLightsFile = "",
+                                bool bEndAppWithTask = false)
         {
-            lock(mtxRunOnce)
+            lock (mtxRunOnce)
             {
                 if (bRunning)
                     throw new Exception("Yurik only supports running one library config at one time");
@@ -137,8 +137,8 @@ namespace Yurik
             if (strLogFileName == "")
                 strLogFileName = "Yurik.log";
 
-           string strLog = Path.Combine(    strLogFolder,
-                                            strLogFileName);
+            string strLog = Path.Combine(strLogFolder,
+                                             strLogFileName);
 
             using (LogFile oLog = new LogFile(strLog))
             {
@@ -181,14 +181,14 @@ namespace Yurik
                     Log($"--------------------------------");
                     throw new Exception("Failed to load Yurik Library");
                 }
-            
+
                 Log("Creating Viewer");
 
                 Viewer? oViewer = null;
 
                 try
                 {
-                    oViewer = new Viewer(   "Yurik", 
+                    oViewer = new Viewer("Yurik",
                                             new Vector2(2048f, 1024f),
                                             oLog);
                 }
@@ -233,7 +233,7 @@ namespace Yurik
                             {
                                 Log($"Could not load lights embedded environment, trying to load from disk instead.");
 
-                                strLightsFile = strFindLightSetupFile(  strSrcFolder, 
+                                strLightsFile = strFindLightSetupFile(strSrcFolder,
                                                                 out strSearched);
 
                                 if (!File.Exists(strLightsFile))
@@ -251,7 +251,7 @@ namespace Yurik
                                 oViewer.LoadLightSetup(strLightsFile);
                             }
                         }
-                        
+
                         oViewer.SetBackgroundColor("FF");
                     }
 
@@ -259,7 +259,7 @@ namespace Yurik
                     {
                         Log($"Failed to load Light Setup - your viewer will look dark\n{e.Message}");
                     }
-                    
+
 
                     lock (oMtxViewer)
                     {
@@ -297,7 +297,7 @@ namespace Yurik
                 }
             }
 
-            lock(mtxRunOnce)
+            lock (mtxRunOnce)
             {
                 Debug.Assert(bRunning);
                 bRunning = false;
@@ -394,7 +394,7 @@ namespace Yurik
         /// 
         public Library(float _fVoxelSizeMM)
         {
-            lock(mtxRunOnce)
+            lock (mtxRunOnce)
             {
                 if (bRunning)
                     throw new Exception("Yurik only supports running one library config at one time");
@@ -406,7 +406,7 @@ namespace Yurik
 
             Debug.Assert(_fVoxelSizeMM > 0f);
             fVoxelSizeMM = _fVoxelSizeMM;
-           
+
             try
             {
                 // Create a config using physical coordinates
@@ -432,24 +432,24 @@ namespace Yurik
             // so should be compatible with our own
             // structs, but let's be sure
 
-            Vector3     vec3    = new();
-            Vector2     vec2    = new();
-            Matrix4x4   mat4    = new();
-            Coord       xyz     = new(0, 0, 0);
-            Triangle    tri     = new(0, 0, 0);
-            ColorFloat  clr     = new(0f);
-            BBox2       oBB2    = new();
-            BBox3       oBB3    = new();
+            Vector3 vec3 = new();
+            Vector2 vec2 = new();
+            Matrix4x4 mat4 = new();
+            Coord xyz = new(0, 0, 0);
+            Triangle tri = new(0, 0, 0);
+            ColorFloat clr = new(0f);
+            BBox2 oBB2 = new();
+            BBox3 oBB3 = new();
 
-            Debug.Assert(sizeof(bool)           == 1);                  // 8 bit for bool assumed
-            Debug.Assert(Marshal.SizeOf(vec3)   == ((32 * 3) / 8));     // 3 x 32 bit float
-            Debug.Assert(Marshal.SizeOf(vec2)   == ((32 * 2) / 8));     // 2 x 32 bit float
-            Debug.Assert(Marshal.SizeOf(mat4)   == ((32 * 16) / 8));    // 4 x 4 x 32 bit float 
-            Debug.Assert(Marshal.SizeOf(xyz)    == ((32 * 3) / 8));     // 3 x 32 bit integer
-            Debug.Assert(Marshal.SizeOf(tri)    == ((32 * 3) / 8));     // 3 x 32 bit integer
-            Debug.Assert(Marshal.SizeOf(clr)    == ((32 * 4) / 8));     // 4 x 32 bit float
-            Debug.Assert(Marshal.SizeOf(oBB2)   == ((32 * 2 * 2) / 8)); // 2 x vec2
-            Debug.Assert(Marshal.SizeOf(oBB3)   == ((32 * 3 * 2) / 8)); // 2 x vec3
+            Debug.Assert(sizeof(bool) == 1);                  // 8 bit for bool assumed
+            Debug.Assert(Marshal.SizeOf(vec3) == ((32 * 3) / 8));     // 3 x 32 bit float
+            Debug.Assert(Marshal.SizeOf(vec2) == ((32 * 2) / 8));     // 2 x 32 bit float
+            Debug.Assert(Marshal.SizeOf(mat4) == ((32 * 16) / 8));    // 4 x 4 x 32 bit float 
+            Debug.Assert(Marshal.SizeOf(xyz) == ((32 * 3) / 8));     // 3 x 32 bit integer
+            Debug.Assert(Marshal.SizeOf(tri) == ((32 * 3) / 8));     // 3 x 32 bit integer
+            Debug.Assert(Marshal.SizeOf(clr) == ((32 * 4) / 8));     // 4 x 32 bit float
+            Debug.Assert(Marshal.SizeOf(oBB2) == ((32 * 2 * 2) / 8)); // 2 x vec2
+            Debug.Assert(Marshal.SizeOf(oBB3) == ((32 * 3 * 2) / 8)); // 2 x vec3
 
             // If any of these assert, then something is wrong with the
             // memory layout, and the interface to compatible C libraries
@@ -484,12 +484,12 @@ namespace Yurik
 
             try
             {
-                Lattice     lat     = new();
-                Voxels      vox     = new();
-                Mesh        msh     = new();
-                Voxels      voxM    = new(msh);
-                Voxels      voxL    = new(lat);
-                PolyLine    oPoly   = new("FF0000");
+                Lattice lat = new();
+                Voxels vox = new();
+                Mesh msh = new();
+                Voxels voxM = new(msh);
+                Voxels voxL = new(lat);
+                PolyLine oPoly = new("FF0000");
             }
 
             catch (Exception e)
@@ -501,58 +501,58 @@ namespace Yurik
             return true;
         }
 
-        public static Vector3 vecVoxelsToMm(    int x,
+        public static Vector3 vecVoxelsToMm(int x,
                                                 int y,
                                                 int z)
         {
             Vector3 vecMm = new();
-            Vector3 vecVoxels   = new Vector3(  (float) x,
-                                                (float) y,
-                                                (float) z);
-            _VoxelsToMm(    in vecVoxels,
+            Vector3 vecVoxels = new Vector3((float)x,
+                                                (float)y,
+                                                (float)z);
+            _VoxelsToMm(in vecVoxels,
                             ref vecMm);
 
             return vecMm;
         }
 
-         public static void MmToVoxels( Vector3 vecMm,
-                                        out int x,
-                                        out int y,
-                                        out int z)
+        public static void MmToVoxels(Vector3 vecMm,
+                                       out int x,
+                                       out int y,
+                                       out int z)
         {
-            Vector3 vecResult   = Vector3.Zero;
+            Vector3 vecResult = Vector3.Zero;
 
-            _VoxelsToMm(    in vecMm,
+            _VoxelsToMm(in vecMm,
                             ref vecResult);
 
-            x = (int) (vecResult.X + 0.5f);
-            y = (int) (vecResult.Y + 0.5f);
-            z = (int) (vecResult.Z + 0.5f);
+            x = (int)(vecResult.X + 0.5f);
+            y = (int)(vecResult.Y + 0.5f);
+            z = (int)(vecResult.Z + 0.5f);
         }
 
-        public static   float   fVoxelSizeMM = 0.0f;
-        public static   string  strLogFolder = "";
-        public static   string  strSrcFolder = "";
+        public static float fVoxelSizeMM = 0.0f;
+        public static string strLogFolder = "";
+        public static string strSrcFolder = "";
 
-        private static object   oMtxLog     = new object();
-        private static object   oMtxViewer  = new object();
-        private static LogFile? oTheLog     = null;
-        private static Viewer?  oTheViewer  = null;
+        private static object oMtxLog = new object();
+        private static object oMtxViewer = new object();
+        private static LogFile? oTheLog = null;
+        private static Viewer? oTheViewer = null;
 
-        private static object   mtxRunOnce  = new object();
-        private static bool     bRunning    = false;
+        private static object mtxRunOnce = new object();
+        private static bool bRunning = false;
 
         ~Library()
         {
             Dispose(false);
         }
 
-        public static string strFindLightSetupFile( string strInputFolder,
+        public static string strFindLightSetupFile(string strInputFolder,
                                                     out string strSearched)
         {
             strSearched = "";
 
-            string strLightsFile    = Path.Combine( Utils.strYurikSourceCodeFolder(), 
+            string strLightsFile = Path.Combine(Utils.strYurikSourceCodeFolder(),
                                                     "ViewerEnvironment/YurikDefaultEnv.zip");
 
             if (File.Exists(strLightsFile))
@@ -562,14 +562,14 @@ namespace Yurik
 
             if (strInputFolder == "")
             {
-                strLightsFile = Path.Combine(   Utils.strDocumentsFolder(), 
+                strLightsFile = Path.Combine(Utils.strDocumentsFolder(),
                                                 "YurikDefaultEnv.zip");
 
                 strSearched += strLightsFile + "\n";
             }
             else
             {
-                strLightsFile = Path.Combine(   strInputFolder, 
+                strLightsFile = Path.Combine(strInputFolder,
                                                 "YurikDefaultEnv.zip");
 
                 strSearched += strLightsFile + "\n";
@@ -577,7 +577,7 @@ namespace Yurik
 
             if (!File.Exists(strLightsFile))
             {
-                strLightsFile = Path.Combine(    Utils.strExecutableFolder(), 
+                strLightsFile = Path.Combine(Utils.strExecutableFolder(),
                                                 "ViewerEnvironment.zip");
 
                 strSearched += strLightsFile + "\n";
@@ -606,7 +606,7 @@ namespace Yurik
                 _Destroy();
             }
 
-            lock(mtxRunOnce)
+            lock (mtxRunOnce)
             {
                 Debug.Assert(bRunning);
                 bRunning = false;

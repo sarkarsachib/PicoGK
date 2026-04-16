@@ -61,11 +61,11 @@ namespace Yurik
         private static extern void _GetBuildInfo(StringBuilder psz);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Library_VoxelsToMm")]
-        private static extern void _VoxelsToMm( in  Vector3 vecVoxelCoordinate,
+        private static extern void _VoxelsToMm(in Vector3 vecVoxelCoordinate,
                                                 ref Vector3 vecMmCoordinate);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Library_MmToVoxels")]
-        private static extern void _MmToVoxels( in  Vector3 vecMmCoordinate,
+        private static extern void _MmToVoxels(in Vector3 vecMmCoordinate,
                                                 ref Vector3 vecVoxelCoordinate);
     }
 
@@ -103,19 +103,19 @@ namespace Yurik
         private static extern int _nTriangleCount(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetTriangle")]
-        private static extern void _GetTriangle(    IntPtr hThis,
+        private static extern void _GetTriangle(IntPtr hThis,
                                                     int nTriangle,
                                                     ref Triangle T);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetTriangleV")]
-        private static extern void _GetTriangleV(   IntPtr hThis,
+        private static extern void _GetTriangleV(IntPtr hThis,
                                                     int nTriangle,
                                                     ref Vector3 vecA,
                                                     ref Vector3 vecB,
                                                     ref Vector3 vecC);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Mesh_GetBoundingBox")]
-        private static extern void _GetBoundingBox( IntPtr hThis,
+        private static extern void _GetBoundingBox(IntPtr hThis,
                                                     ref BBox3 oBBox);
 
         // Dispose Pattern
@@ -155,8 +155,8 @@ namespace Yurik
             m_bDisposed = true;
         }
 
-        bool            m_bDisposed = false;
-        internal IntPtr m_hThis     = IntPtr.Zero;
+        bool m_bDisposed = false;
+        internal IntPtr m_hThis = IntPtr.Zero;
 
     }
 
@@ -172,17 +172,17 @@ namespace Yurik
         private static extern void _Destroy(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Lattice_AddSphere")]
-        private static extern void _AddSphere(  IntPtr      hThis,
-                                                in Vector3  vecCenter,
-                                                float       fRadius);
+        private static extern void _AddSphere(IntPtr hThis,
+                                                in Vector3 vecCenter,
+                                                float fRadius);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Lattice_AddBeam")]
-        private static extern void _AddBeam(    IntPtr      hThis,
-                                                in Vector3  vecA,
-                                                in Vector3  vecB,
-                                                float       fRadiusA,
-                                                float       fRadiusB,
-                                                bool        bRoundCap);
+        private static extern void _AddBeam(IntPtr hThis,
+                                                in Vector3 vecA,
+                                                in Vector3 vecB,
+                                                float fRadiusA,
+                                                float fRadiusB,
+                                                bool bRoundCap);
 
         // Dispose Pattern
 
@@ -221,8 +221,8 @@ namespace Yurik
             m_bDisposed = true;
         }
 
-        bool            m_bDisposed = false;
-        internal IntPtr m_hThis     = IntPtr.Zero;
+        bool m_bDisposed = false;
+        internal IntPtr m_hThis = IntPtr.Zero;
     }
 
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
@@ -246,104 +246,104 @@ namespace Yurik
         private static extern void _Destroy(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_BoolAdd")]
-        private static extern void _BoolAdd(    IntPtr hThis,
+        private static extern void _BoolAdd(IntPtr hThis,
                                                 IntPtr hOther);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_BoolSubtract")]
-        private static extern void _BoolSubtract(   IntPtr hThis,
+        private static extern void _BoolSubtract(IntPtr hThis,
                                                     IntPtr hOther);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_BoolIntersect")]
-        private static extern void _BoolIntersect(  IntPtr hThis,
+        private static extern void _BoolIntersect(IntPtr hThis,
                                                     IntPtr hOther);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_BoolAddSmooth")]
-        private static extern void _BoolAddSmooth(  IntPtr hThis,
+        private static extern void _BoolAddSmooth(IntPtr hThis,
                                                     IntPtr hOther,
                                                     float fSmoothDistance);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Offset")]
-        private static extern void _Offset( IntPtr hThis,
+        private static extern void _Offset(IntPtr hThis,
                                             float fOffset);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_DoubleOffset")]
-        private static extern void _DoubleOffset(   IntPtr hThis,
+        private static extern void _DoubleOffset(IntPtr hThis,
                                                     float fOffset1,
                                                     float fOffset2);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_TripleOffset")]
-        private static extern void _TripleOffset(   IntPtr hThis,
+        private static extern void _TripleOffset(IntPtr hThis,
                                                     float fOffset);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Gaussian")]
-        private static extern void _Gaussian( IntPtr hThis,
+        private static extern void _Gaussian(IntPtr hThis,
                                             float fDistance);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Median")]
-        private static extern void _Median( IntPtr hThis,
+        private static extern void _Median(IntPtr hThis,
                                             float fDistance);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_Mean")]
-        private static extern void _Mean( IntPtr hThis,
+        private static extern void _Mean(IntPtr hThis,
                                           float fDistance);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_RenderMesh")]
-        private static extern void _RenderMesh( IntPtr hThis,
+        private static extern void _RenderMesh(IntPtr hThis,
                                                 IntPtr hMesh);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
         private delegate float CallbackImplicitDistance(in Vector3 vec);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_RenderImplicit")]
-        private static extern void _RenderImplicit( IntPtr hThis,
+        private static extern void _RenderImplicit(IntPtr hThis,
                                                     in BBox3 oBounds,
                                                     CallbackImplicitDistance Callback);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_IntersectImplicit")]
-        private static extern void _IntersectImplicit(  IntPtr hThis,
+        private static extern void _IntersectImplicit(IntPtr hThis,
                                                         CallbackImplicitDistance Callback);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_RenderLattice")]
-        private static extern void _RenderLattice(  IntPtr hThis,
+        private static extern void _RenderLattice(IntPtr hThis,
                                                     IntPtr hLattice);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_ProjectZSlice")]
-        private static extern void _ProjectZSlice(  IntPtr hThis,
+        private static extern void _ProjectZSlice(IntPtr hThis,
                                                     float fStartX,
                                                     float fEndX);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_bIsInside")]
-        private static extern bool _bIsInside(      IntPtr hThis,
+        private static extern bool _bIsInside(IntPtr hThis,
                                                     in Vector3 vecTestPoint);
 
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_bIsEqual")]
-        private static extern bool _bIsEqual(   IntPtr hThis,
+        private static extern bool _bIsEqual(IntPtr hThis,
                                                 IntPtr hOther);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_CalculateProperties")]
-        private extern static void _CalculateProperties(    IntPtr hThis,
+        private extern static void _CalculateProperties(IntPtr hThis,
                                                             ref float pfVolume,
                                                             ref BBox3 oBBox);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetSurfaceNormal")]
         private extern static void _GetSurfaceNormal(IntPtr hThis,
-                                                        in  Vector3 vecSurfacePoint,
+                                                        in Vector3 vecSurfacePoint,
                                                         ref Vector3 vecSurfaceNormal);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_bClosestPointOnSurface")]
-        private extern static bool _bClosestPointOnSurface( IntPtr hThis,
-                                                            in  Vector3 vecSearch,
+        private extern static bool _bClosestPointOnSurface(IntPtr hThis,
+                                                            in Vector3 vecSearch,
                                                             ref Vector3 vecSurfacePoint);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_bRayCastToSurface")]
-        private extern static bool _bRayCastToSurface(  IntPtr hThis,
-                                                        in  Vector3 vecSearch,
-                                                        in  Vector3 vecNormal,
+        private extern static bool _bRayCastToSurface(IntPtr hThis,
+                                                        in Vector3 vecSearch,
+                                                        in Vector3 vecNormal,
                                                         ref Vector3 vecSurfacePoint);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetVoxelDimensions")]
-        private extern static void _GetVoxelDimensions( IntPtr hThis,
+        private extern static void _GetVoxelDimensions(IntPtr hThis,
                                                         ref int nXOrigin,
                                                         ref int nYOrigin,
                                                         ref int nZOrigin,
@@ -352,13 +352,13 @@ namespace Yurik
                                                         ref int nZSize);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetSlice")]
-        private extern static void _GetVoxelSlice(  IntPtr hThis,
+        private extern static void _GetVoxelSlice(IntPtr hThis,
                                                     int nZSlice,
                                                     IntPtr afBuffer,
                                                     ref float fBackgroundValue);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Voxels_GetInterpolatedSlice")]
-        private extern static void _GetInterpolatedVoxelSlice(  IntPtr hThis,
+        private extern static void _GetInterpolatedVoxelSlice(IntPtr hThis,
                                                                 float fZSlice,
                                                                 IntPtr afBuffer,
                                                                 ref float fBackgroundValue);
@@ -400,8 +400,8 @@ namespace Yurik
             m_bDisposed = true;
         }
 
-        bool            m_bDisposed = false;
-        internal IntPtr m_hThis     = IntPtr.Zero;
+        bool m_bDisposed = false;
+        internal IntPtr m_hThis = IntPtr.Zero;
     }
 
     public partial class PolyLine : IDisposable
@@ -416,20 +416,20 @@ namespace Yurik
         private static extern void _Destroy(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "PolyLine_nAddVertex")]
-        private static extern int _nAddVertex(  IntPtr hThis,
+        private static extern int _nAddVertex(IntPtr hThis,
                                                 in Vector3 vec);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "PolyLine_nVertexCount")]
         private static extern int _nVertexCount(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "PolyLine_GetVertex")]
-        private static extern void _GetVertex(  IntPtr hThis,
+        private static extern void _GetVertex(IntPtr hThis,
                                                 int nIndex,
                                                 ref Vector3 vec);
 
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "PolyLine_GetColor")]
-        private static extern void _GetColor(   IntPtr hThis,
+        private static extern void _GetColor(IntPtr hThis,
                                                 ref ColorFloat clr);
 
         // Dispose Pattern
@@ -469,62 +469,62 @@ namespace Yurik
             m_bDisposed = true;
         }
 
-        bool            m_bDisposed = false;
-        internal IntPtr m_hThis     = IntPtr.Zero;
+        bool m_bDisposed = false;
+        internal IntPtr m_hThis = IntPtr.Zero;
     }
 
     public partial class Viewer : IDisposable
     {
         // Define delegates for the callback functions
         [UnmanagedFunctionPointer(CallingConvention.Cdecl, CharSet = CharSet.Ansi)]
-        public delegate void InfoCallback(  string  strMessage,
-                                            bool    bFatalError);
+        public delegate void InfoCallback(string strMessage,
+                                            bool bFatalError);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void UpdateCallback(    IntPtr          hViewer,
-                                                in Vector2      vecViewport,
-                                                ref ColorFloat  clrBackground,
-                                                ref Matrix4x4   matModelViewProjection,
-                                                ref Matrix4x4   matModelTransform,
-                                                ref Matrix4x4   matStatic,
-                                                ref Vector3     vecEyePosition,
-                                                ref Vector3     vecEyeStatic);
+        public delegate void UpdateCallback(IntPtr hViewer,
+                                                in Vector2 vecViewport,
+                                                ref ColorFloat clrBackground,
+                                                ref Matrix4x4 matModelViewProjection,
+                                                ref Matrix4x4 matModelTransform,
+                                                ref Matrix4x4 matStatic,
+                                                ref Vector3 vecEyePosition,
+                                                ref Vector3 vecEyeStatic);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void KeyPressedCallback(    IntPtr  hViewer,
-                                                    int     iKey,
-                                                    int     iScancode,
-                                                    int     iAction,
-                                                    int     iModifiers);
+        public delegate void KeyPressedCallback(IntPtr hViewer,
+                                                    int iKey,
+                                                    int iScancode,
+                                                    int iAction,
+                                                    int iModifiers);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void MouseMovedCallback(    IntPtr      poViewer,
-                                                    in Vector2  vecMousePos);
+        public delegate void MouseMovedCallback(IntPtr poViewer,
+                                                    in Vector2 vecMousePos);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void MouseButtonCallback(   IntPtr  hViewer,
-                                                    int         iButton,
-                                                    int         iAction,
-                                                    int         iModifiers,
-                                                    in Vector2  vecMousePos);
+        public delegate void MouseButtonCallback(IntPtr hViewer,
+                                                    int iButton,
+                                                    int iAction,
+                                                    int iModifiers,
+                                                    in Vector2 vecMousePos);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void ScrollWheelCallback(   IntPtr      hViewer,
-                                                    in Vector2  vecScrollWheel,
-                                                    in Vector2  vecMousePos);
+        public delegate void ScrollWheelCallback(IntPtr hViewer,
+                                                    in Vector2 vecScrollWheel,
+                                                    in Vector2 vecMousePos);
 
         [UnmanagedFunctionPointer(CallingConvention.Cdecl)]
-        public delegate void WindowSizelCallback(   IntPtr hViewer,
+        public delegate void WindowSizelCallback(IntPtr hViewer,
                                                     in Vector2 vecWindowSize);
 
         // Define the P/Invoke signature for Viewer_hCreate
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_hCreate", CharSet = CharSet.Ansi)]
-        public static extern IntPtr _hCreate(   string              strWindowTitle,
-                                                in Vector2          vecSize,
-                                                InfoCallback        fnInfoCallback,
-                                                UpdateCallback      fnUpdateCallback,
-                                                KeyPressedCallback  fnKeyPressedCallback,
-                                                MouseMovedCallback  fnMouseMoveCallback,
+        public static extern IntPtr _hCreate(string strWindowTitle,
+                                                in Vector2 vecSize,
+                                                InfoCallback fnInfoCallback,
+                                                UpdateCallback fnUpdateCallback,
+                                                KeyPressedCallback fnKeyPressedCallback,
+                                                MouseMovedCallback fnMouseMoveCallback,
                                                 MouseButtonCallback fnMouseButtonCallback,
                                                 ScrollWheelCallback fnScrollWheelCallback,
                                                 WindowSizelCallback fnWindowSizeCallback);
@@ -542,58 +542,58 @@ namespace Yurik
         private static extern bool _bPoll(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_RequestScreenShot")]
-        private static extern bool _RequestScreenShot(  IntPtr hThis,
+        private static extern bool _RequestScreenShot(IntPtr hThis,
                                                         string strScreenShotPath);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_bLoadLightSetup")]
-        private static extern bool _bLoadLightSetup(    IntPtr  hThis,
-                                                        byte [] abyDiffuseDdsBuffer,
-                                                        int     nDiffuseSize,
-                                                        byte [] pSpecularDdsBuffer,
-                                                        int     nSpecularSize);
+        private static extern bool _bLoadLightSetup(IntPtr hThis,
+                                                        byte[] abyDiffuseDdsBuffer,
+                                                        int nDiffuseSize,
+                                                        byte[] pSpecularDdsBuffer,
+                                                        int nSpecularSize);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_RequestClose")]
         private static extern void _RequestClose(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_AddMesh")]
-        private static extern void _AddMesh(    IntPtr  hThis,
-                                                int     nGroup,
-                                                IntPtr  hMesh);
+        private static extern void _AddMesh(IntPtr hThis,
+                                                int nGroup,
+                                                IntPtr hMesh);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_RemoveMesh")]
-        private static extern void _RemoveMesh( IntPtr hThis,
+        private static extern void _RemoveMesh(IntPtr hThis,
                                                 IntPtr hMesh);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_AddPolyLine")]
-        private static extern void _AddPolyLine(    IntPtr hThis,
+        private static extern void _AddPolyLine(IntPtr hThis,
                                                     int nGroupID,
                                                     IntPtr hPolyLine);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_RemovePolyLine")]
-        private static extern void _RemovePolyLine( IntPtr hThis,
+        private static extern void _RemovePolyLine(IntPtr hThis,
                                                     IntPtr hPolyLine);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_SetGroupVisible")]
-        private static extern void _SetGroupVisible(    IntPtr  hThis,
-                                                        int     nGroupID,
-                                                        bool    bVisible);
+        private static extern void _SetGroupVisible(IntPtr hThis,
+                                                        int nGroupID,
+                                                        bool bVisible);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_SetGroupStatic")]
-        private static extern void _SetGroupStatic( IntPtr hThis,
+        private static extern void _SetGroupStatic(IntPtr hThis,
                                                     int nGroupID,
                                                     bool bStatic);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_SetGroupMaterial")]
-        private static extern void _SetGroupMaterial(   IntPtr          hThis,
-                                                        int             nGroupID,
-                                                        in ColorFloat   clr,
-                                                        float           fMetallic,
-                                                        float           fRoughness);
+        private static extern void _SetGroupMaterial(IntPtr hThis,
+                                                        int nGroupID,
+                                                        in ColorFloat clr,
+                                                        float fMetallic,
+                                                        float fRoughness);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Viewer_SetGroupMatrix")]
-        private static extern void _SetGroupMatrix( IntPtr          hThis,
-                                                    int             nGroupID,
-                                                    in Matrix4x4    mat);
+        private static extern void _SetGroupMatrix(IntPtr hThis,
+                                                    int nGroupID,
+                                                    in Matrix4x4 mat);
 
         // Dispose Pattern
 
@@ -612,7 +612,7 @@ namespace Yurik
 
         protected virtual void Dispose(bool bDisposing)
         {
-            
+
             if (m_bDisposed)
             {
                 return;
@@ -633,16 +633,16 @@ namespace Yurik
             m_bDisposed = true;
         }
 
-        InfoCallback        m_fnInfoCB;
-        UpdateCallback      m_fnUpdateCB;
-        KeyPressedCallback  m_fnKeyPressedCB;
-        MouseMovedCallback  m_fnMouseMovedCB;
+        InfoCallback m_fnInfoCB;
+        UpdateCallback m_fnUpdateCB;
+        KeyPressedCallback m_fnKeyPressedCB;
+        MouseMovedCallback m_fnMouseMovedCB;
         MouseButtonCallback m_fnMouseButtonCB;
         ScrollWheelCallback m_fnScrollWheelCB;
         WindowSizelCallback m_fnWindowSizeCB;
 
-        bool    m_bDisposed = false;
-        IntPtr  m_hThis     = IntPtr.Zero;
+        bool m_bDisposed = false;
+        IntPtr m_hThis = IntPtr.Zero;
     }
 
     public partial class OpenVdbFile : IDisposable
@@ -660,36 +660,36 @@ namespace Yurik
         private static extern void _Destroy(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_bSaveToFile", CharSet = CharSet.Ansi)]
-        private static extern bool _bSaveToFile(    IntPtr hThis,
+        private static extern bool _bSaveToFile(IntPtr hThis,
                                                     string strFileName);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_hGetVoxels")]
-        private static extern IntPtr _hGetVoxels(   IntPtr hThis,
+        private static extern IntPtr _hGetVoxels(IntPtr hThis,
                                                     int nIndex);
 
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_nAddVoxels", CharSet = CharSet.Ansi)]
-        private static extern int _nAddVoxels(  IntPtr hThis,
+        private static extern int _nAddVoxels(IntPtr hThis,
                                                 string strFieldName,
                                                 IntPtr hVoxels);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_hGetScalarField")]
-        private static extern IntPtr _hGetScalarField(  IntPtr hThis,
+        private static extern IntPtr _hGetScalarField(IntPtr hThis,
                                                         int nIndex);
 
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_nAddScalarField", CharSet = CharSet.Ansi)]
-        private static extern int _nAddScalarField( IntPtr hThis,
+        private static extern int _nAddScalarField(IntPtr hThis,
                                                     string strFieldName,
                                                     IntPtr hField);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_hGetVectorField")]
-        private static extern IntPtr _hGetVectorField(  IntPtr hThis,
+        private static extern IntPtr _hGetVectorField(IntPtr hThis,
                                                         int nIndex);
 
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_nAddVectorField", CharSet = CharSet.Ansi)]
-        private static extern int _nAddVectorField( IntPtr hThis,
+        private static extern int _nAddVectorField(IntPtr hThis,
                                                     string strFieldName,
                                                     IntPtr hField);
 
@@ -697,12 +697,12 @@ namespace Yurik
         private static extern int _nFieldCount(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_GetFieldName", CharSet = CharSet.Ansi)]
-        private static extern void _GetFieldName(   IntPtr hThis,
+        private static extern void _GetFieldName(IntPtr hThis,
                                                     int nIndex,
                                                     StringBuilder psz);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VdbFile_nFieldType")]
-        private static extern int _nFieldType(  IntPtr hThis,
+        private static extern int _nFieldType(IntPtr hThis,
                                                 int nIndex);
 
         // Dispose Pattern
@@ -767,21 +767,21 @@ namespace Yurik
         private static extern void _Destroy(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_SetValue")]
-        private static extern void _SetValue(   IntPtr hThis,
+        private static extern void _SetValue(IntPtr hThis,
                                                 in Vector3 vecPosition,
                                                 float fValue);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_bGetValue")]
-        private static extern bool _bGetValue(   IntPtr hThis,
-                                                 in  Vector3 vecPosition,
+        private static extern bool _bGetValue(IntPtr hThis,
+                                                 in Vector3 vecPosition,
                                                  ref float fValue);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_RemoveValue")]
-        private static extern bool _RemoveValue(    IntPtr hThis,
-                                                    in  Vector3 vecPosition);
+        private static extern bool _RemoveValue(IntPtr hThis,
+                                                    in Vector3 vecPosition);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_GetVoxelDimensions")]
-        private extern static void _GetVoxelDimensions( IntPtr hThis,
+        private extern static void _GetVoxelDimensions(IntPtr hThis,
                                                         ref int nXOrigin,
                                                         ref int nYOrigin,
                                                         ref int nZOrigin,
@@ -790,12 +790,12 @@ namespace Yurik
                                                         ref int nZSize);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_GetSlice")]
-        private extern static void _GetVoxelSlice(  IntPtr hThis,
+        private extern static void _GetVoxelSlice(IntPtr hThis,
                                                     int nZSlice,
                                                     IntPtr afBuffer);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "ScalarField_TraverseActive")]
-        private extern static void _TraverseActive( IntPtr hThis,
+        private extern static void _TraverseActive(IntPtr hThis,
                                                     CallbackScalarFieldTraverse pfn);
 
 
@@ -861,21 +861,21 @@ namespace Yurik
         private static extern void _Destroy(IntPtr hThis);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VectorField_SetValue")]
-        private static extern void _SetValue(   IntPtr hThis,
+        private static extern void _SetValue(IntPtr hThis,
                                                 in Vector3 vecPosition,
                                                 in Vector3 vecValue);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VectorField_bGetValue")]
-        private static extern bool _bGetValue(   IntPtr hThis,
-                                                 in  Vector3 vecPosition,
+        private static extern bool _bGetValue(IntPtr hThis,
+                                                 in Vector3 vecPosition,
                                                  ref Vector3 vecValue);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VectorField_RemoveValue")]
-        private static extern bool _RemoveValue(    IntPtr hThis,
-                                                    in  Vector3 vecPosition);
+        private static extern bool _RemoveValue(IntPtr hThis,
+                                                    in Vector3 vecPosition);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "VectorField_TraverseActive")]
-        private extern static void _TraverseActive( IntPtr hThis,
+        private extern static void _TraverseActive(IntPtr hThis,
                                                     CallbackVectorFieldTraverse pfn);
 
         // Dispose Pattern
@@ -940,13 +940,13 @@ namespace Yurik
         private static extern int _nNameLengthAt(IntPtr hThis, int nIndex);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Metadata_bGetNameAt", CharSet = CharSet.Ansi)]
-        private static extern bool _bGetNameAt( IntPtr hThis, int nIndex, StringBuilder pszValueName, int nMaxStringLen);
+        private static extern bool _bGetNameAt(IntPtr hThis, int nIndex, StringBuilder pszValueName, int nMaxStringLen);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Metadata_nTypeAt", CharSet = CharSet.Ansi)]
         private static extern int _nTypeAt(IntPtr hThis, string strName);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Metadata_nStringLengthAt", CharSet = CharSet.Ansi)]
-        private static extern int _nStringLengthAt( IntPtr hThis, string strFieldName);
+        private static extern int _nStringLengthAt(IntPtr hThis, string strFieldName);
 
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "Metadata_bGetStringAt", CharSet = CharSet.Ansi)]
         private static extern bool _bGetStringAt(IntPtr hThis, string strFieldName, StringBuilder pszValue, int nMaxStringLen);
@@ -969,7 +969,7 @@ namespace Yurik
         [DllImport(Config.strYurikLib, CallingConvention = CallingConvention.Cdecl, EntryPoint = "MetaData_RemoveValue", CharSet = CharSet.Ansi)]
         private static extern void _RemoveValue(IntPtr hThis, string strFieldName);
 
-         ~FieldMetadata()
+        ~FieldMetadata()
         {
             Dispose(false);
         }

@@ -48,7 +48,7 @@ namespace Yurik
     /// </summary>
 	public partial class CliIo
     {
-        public enum EFormat {UseEmptyFirstLayer, FirstLayerWithContent};
+        public enum EFormat { UseEmptyFirstLayer, FirstLayerWithContent };
         public class Result
         {
             public PolySliceStack oSlices = new();
@@ -62,7 +62,7 @@ namespace Yurik
             public string strWarnings = "";
         }
 
-        public static void WriteSlicesToCliFile(    PolySliceStack oSlices,
+        public static void WriteSlicesToCliFile(PolySliceStack oSlices,
                                                     string strFilePath,
                                                     EFormat eFormat,
                                                     string strDate = "",
@@ -93,10 +93,10 @@ namespace Yurik
 
                     string strDim = oSlices.oBBox().vecMin.X.ToString("00000000.00000") + "," +
                                     oSlices.oBBox().vecMin.Y.ToString("00000000.00000") + "," +
-                                    "00000000.00000" + "," + 
+                                    "00000000.00000" + "," +
                                     oSlices.oBBox().vecMax.X.ToString("00000000.00000") + "," +
                                     oSlices.oBBox().vecMax.Y.ToString("00000000.00000") + "," +
-                                    oSlices.oSliceAt(oSlices.nCount()-1).fZPos().ToString("00000000.00000");
+                                    oSlices.oSliceAt(oSlices.nCount() - 1).fZPos().ToString("00000000.00000");
 
                     int nSliceCount = oSlices.nCount();
 
@@ -110,10 +110,10 @@ namespace Yurik
 
                     if (eFormat == EFormat.UseEmptyFirstLayer)
                     {
-                         // Add the zero layer at the bottom
+                        // Add the zero layer at the bottom
                         oTextWriter.WriteLine("$$LAYER/0.0");
                     }
-                   
+
                     // Now add all the actual layers
                     for (int nLayer = 0; nLayer < oSlices.nCount(); nLayer++)
                     {
@@ -670,7 +670,7 @@ namespace Yurik
         {
         }
 
-        private static bool bExtractParameter(  ref string strLine,
+        private static bool bExtractParameter(ref string strLine,
                                                 ref string strParam)
         {
             if ((strLine.StartsWith('/')) || (strLine.StartsWith(',')))
@@ -696,7 +696,7 @@ namespace Yurik
 
     public partial class Voxels
     {
-        public PolySliceStack oVectorize(   float fLayerHeight = 0f,
+        public PolySliceStack oVectorize(float fLayerHeight = 0f,
                                             bool bUseAbsXYOrigin = false)
 
         {
@@ -705,41 +705,41 @@ namespace Yurik
             // are interpolated between voxel layers
             if (fLayerHeight == 0f)
                 fLayerHeight = Library.fVoxelSizeMM;
-                
+
             float fZStep = fLayerHeight / Library.fVoxelSizeMM;
 
-            GetVoxelDimensions( out int nXOrigin,
+            GetVoxelDimensions(out int nXOrigin,
                                 out int nYOrigin,
                                 out int _,
                                 out int nXSize,
                                 out int nYSize,
                                 out int nZSize);
 
-            ImageGrayScale img = new(nXSize,nYSize);
+            ImageGrayScale img = new(nXSize, nYSize);
 
             List<PolySlice> oSlices = new();
 
-            Vector2 vecOrigin   = Vector2.Zero;
+            Vector2 vecOrigin = Vector2.Zero;
 
             if (bUseAbsXYOrigin)
             {
-                vecOrigin = new(    nXOrigin*Library.fVoxelSizeMM,
-                                    nYOrigin*Library.fVoxelSizeMM);
+                vecOrigin = new(nXOrigin * Library.fVoxelSizeMM,
+                                    nYOrigin * Library.fVoxelSizeMM);
             }
 
-            float fLastLayer    = nZSize-1;
-            float fZ            = 0;
-            float fLayerZ       = fLayerHeight;
+            float fLastLayer = nZSize - 1;
+            float fZ = 0;
+            float fLayerZ = fLayerHeight;
 
             while (fZ <= fLastLayer)
             {
-               GetInterpolatedVoxelSlice(   fZ,
-                                            ref img,
-                                            ESliceMode.SignedDistance);
+                GetInterpolatedVoxelSlice(fZ,
+                                             ref img,
+                                             ESliceMode.SignedDistance);
 
                 fZ += fZStep;
 
-                PolySlice oSlice = PolySlice.oFromSdf(  img,
+                PolySlice oSlice = PolySlice.oFromSdf(img,
                                                         fLayerZ,
                                                         vecOrigin,
                                                         Library.fVoxelSizeMM);
@@ -748,7 +748,7 @@ namespace Yurik
                 {
                     // Skip empty layers until first filled layer
                     if (oSlice.bIsEmpty())
-                        continue; 
+                        continue;
                 }
 
                 oSlice.Close();
@@ -760,7 +760,7 @@ namespace Yurik
             if (oSlices.Count() == 0)
                 throw new Exception("Voxel field is empty - cannot write .CLI file");
 
-            int nLast = oSlices.Count()-1;
+            int nLast = oSlices.Count() - 1;
             while (oSlices[nLast].bIsEmpty())
             {
                 oSlices.RemoveAt(nLast);
@@ -788,14 +788,14 @@ namespace Yurik
         /// position in space in X/Y that the voxel field was in. By default
         /// the position of the CLI slices are relative to the voxel field
         /// boundaries.</param>
-        public void SaveToCliFile(  string strFileName,
-                                    float fLayerHeight      = 0f,
-                                    CliIo.EFormat eFormat   = CliIo.EFormat.FirstLayerWithContent,
-                                    bool bUseAbsXYOrigin    = false)
+        public void SaveToCliFile(string strFileName,
+                                    float fLayerHeight = 0f,
+                                    CliIo.EFormat eFormat = CliIo.EFormat.FirstLayerWithContent,
+                                    bool bUseAbsXYOrigin = false)
         {
             PolySliceStack oStack = oVectorize(fLayerHeight, bUseAbsXYOrigin);
-            CliIo.WriteSlicesToCliFile( oStack, 
-                                        strFileName, 
+            CliIo.WriteSlicesToCliFile(oStack,
+                                        strFileName,
                                         eFormat);
         }
     }

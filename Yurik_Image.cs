@@ -48,9 +48,9 @@ namespace Yurik
         public readonly int nHeight;
         public readonly EType eType;
 
-        public abstract ColorFloat  clrValue(int x, int y);
-        public abstract float       fValue(int x, int y);
-        public abstract bool        bValue(int x, int y);
+        public abstract ColorFloat clrValue(int x, int y);
+        public abstract float fValue(int x, int y);
+        public abstract bool bValue(int x, int y);
 
         public abstract void SetValue(int x, int y, in ColorFloat clr);
         public abstract void SetValue(int x, int y, float fGray);
@@ -137,12 +137,12 @@ namespace Yurik
         /// <returns></returns>
         public ColorFloat clrGetAtNormalized(float fTX, float fTY)
         {
-            float fRealX = fTX * nWidth-1;
-            float fRealY = fTY * nHeight-1;
-            
-            int x0 = (int) Math.Floor(fRealX);
+            float fRealX = fTX * nWidth - 1;
+            float fRealY = fTY * nHeight - 1;
+
+            int x0 = (int)Math.Floor(fRealX);
             int x1 = x0 + 1;
-            int y0 = (int) Math.Floor(fRealY);
+            int y0 = (int)Math.Floor(fRealY);
             int y1 = y0 + 1;
 
             x0 = int.Clamp(x0, 0, nWidth - 1);
@@ -257,7 +257,7 @@ namespace Yurik
             }
         }
 
-        protected Image(    int _nWidth,
+        protected Image(int _nWidth,
                             int _nHeight,
                             EType _eType)
         {
@@ -276,7 +276,7 @@ namespace Yurik
 
     public abstract partial class ImageBWAbstract : Image
     {
-        public ImageBWAbstract( int _nWidth,
+        public ImageBWAbstract(int _nWidth,
                                 int _nHeight)
             : base(_nWidth,
                     _nHeight,
@@ -307,7 +307,7 @@ namespace Yurik
 
     public abstract partial class ImageGrayscaleAbstract : Image
     {
-        public ImageGrayscaleAbstract(  int _nWidth,
+        public ImageGrayscaleAbstract(int _nWidth,
                                         int _nHeight)
             : base(_nWidth,
                     _nHeight,
@@ -361,9 +361,9 @@ namespace Yurik
 
     public abstract partial class ImageColorAbstract : Image
     {
-        public ImageColorAbstract(  int _iWidth,
+        public ImageColorAbstract(int _iWidth,
                                     int _iHeight)
-            : base( _iWidth,
+            : base(_iWidth,
                     _iHeight,
                     EType.COLOR)
         {
@@ -393,9 +393,9 @@ namespace Yurik
 
     public partial class ImageGrayScale : ImageGrayscaleAbstract
     {
-        public ImageGrayScale(  int _nWidth,
+        public ImageGrayScale(int _nWidth,
                                 int _nHeight)
-                : base( _nWidth,
+                : base(_nWidth,
                         _nHeight)
         {
             m_afValues = new float[nWidth * nHeight];
@@ -403,7 +403,7 @@ namespace Yurik
 
         public override void SetValue(int x, int y, float fGray)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -416,7 +416,7 @@ namespace Yurik
 
         public override float fValue(int x, int y)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -431,10 +431,10 @@ namespace Yurik
         {
             ImageColor img = new(nWidth, nHeight);
 
-            ColorFloat clrInsideBackground  = new("006600");
+            ColorFloat clrInsideBackground = new("006600");
             ColorFloat clrOutsideBackground = new("00");
-            
-            for (int x=0; x<nWidth; x++)
+
+            for (int x = 0; x < nWidth; x++)
             {
                 for (int y = 0; y < nHeight; y++)
                 {
@@ -468,7 +468,7 @@ namespace Yurik
             return img;
         }
 
-        public static ImageGrayScale imgGetInterpolated(    ImageGrayScale oImg1,
+        public static ImageGrayScale imgGetInterpolated(ImageGrayScale oImg1,
                                                             ImageGrayScale oImg2,
                                                             float fWeight = 0.5f)
         {
@@ -488,7 +488,7 @@ namespace Yurik
 
             ImageGrayScale oNew = new(oImg1.nWidth, oImg1.nHeight);
 
-            for (int n=0; n<oNew.nWidth * oNew.nHeight; n++)
+            for (int n = 0; n < oNew.nWidth * oNew.nHeight; n++)
             {
                 oNew.m_afValues[n] = (fFac1 * oImg1.m_afValues[n]) + (fWeight * oImg2.m_afValues[n]);
             }
@@ -501,40 +501,40 @@ namespace Yurik
 
     public partial class ImageRgba32 : ImageColorAbstract
     {
-        public ImageRgba32(  int _nWidth,
+        public ImageRgba32(int _nWidth,
                              int _nHeight)
-                : base( _nWidth,
+                : base(_nWidth,
                         _nHeight)
         {
             m_aclrValues = new ColorRgba32[nWidth * nHeight];
         }
 
         public ImageRgba32(Image imgSource)
-            : this( imgSource.nWidth,
+            : this(imgSource.nWidth,
                     imgSource.nHeight)
         {
-            for (int x=0; x<nWidth; x++)
+            for (int x = 0; x < nWidth; x++)
             {
                 for (int y = 0; y < nHeight; y++)
                 {
-                    SetRgba32(x,y,imgSource.clrValue(x,y));
+                    SetRgba32(x, y, imgSource.clrValue(x, y));
                 }
             }
         }
 
         public override ColorFloat clrValue(int x, int y)
         {
-            return new ColorFloat(sGetRgba32(x,y));
+            return new ColorFloat(sGetRgba32(x, y));
         }
 
         public override void SetValue(int x, int y, in ColorFloat clr)
         {
-            SetRgba32(x,y,new ColorRgba32(clr));
+            SetRgba32(x, y, new ColorRgba32(clr));
         }
 
         public override void SetRgba32(int x, int y, ColorRgba32 clr)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -547,7 +547,7 @@ namespace Yurik
 
         public override ColorRgba32 sGetRgba32(int x, int y)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -563,40 +563,40 @@ namespace Yurik
 
     public partial class ImageRgb24 : ImageColorAbstract
     {
-        public ImageRgb24(  int _nWidth,
+        public ImageRgb24(int _nWidth,
                             int _nHeight)
-                : base( _nWidth,
+                : base(_nWidth,
                         _nHeight)
         {
             m_aclrValues = new ColorRgb24[nWidth * nHeight];
         }
 
         public ImageRgb24(Image imgSource)
-            : this( imgSource.nWidth,
+            : this(imgSource.nWidth,
                     imgSource.nHeight)
         {
-            for (int x=0; x<nWidth; x++)
+            for (int x = 0; x < nWidth; x++)
             {
                 for (int y = 0; y < nHeight; y++)
                 {
-                    SetRgb24(x,y,imgSource.clrValue(x,y));
+                    SetRgb24(x, y, imgSource.clrValue(x, y));
                 }
             }
         }
 
         public override ColorFloat clrValue(int x, int y)
         {
-            return new ColorFloat(sGetRgb24(x,y));
+            return new ColorFloat(sGetRgb24(x, y));
         }
 
         public override void SetValue(int x, int y, in ColorFloat clr)
         {
-            SetRgb24(x,y,new ColorRgb24(clr));
+            SetRgb24(x, y, new ColorRgb24(clr));
         }
 
         public override void SetRgb24(int x, int y, ColorRgb24 clr)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -609,7 +609,7 @@ namespace Yurik
 
         public override ColorRgb24 sGetRgb24(int x, int y)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -625,30 +625,30 @@ namespace Yurik
 
     public partial class ImageColor : ImageColorAbstract
     {
-        public ImageColor(  int _nWidth,
+        public ImageColor(int _nWidth,
                             int _nHeight)
-                : base( _nWidth,
+                : base(_nWidth,
                         _nHeight)
         {
             m_aclrValues = new ColorFloat[nWidth * nHeight];
         }
 
         public ImageColor(Image imgSource)
-            : this( imgSource.nWidth,
+            : this(imgSource.nWidth,
                     imgSource.nHeight)
         {
-            for (int x=0; x<nWidth; x++)
+            for (int x = 0; x < nWidth; x++)
             {
                 for (int y = 0; y < nHeight; y++)
                 {
-                    SetValue(x,y,imgSource.clrValue(x,y));
+                    SetValue(x, y, imgSource.clrValue(x, y));
                 }
             }
         }
 
         public override void SetValue(int x, int y, in ColorFloat clr)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))
@@ -661,7 +661,7 @@ namespace Yurik
 
         public override ColorFloat clrValue(int x, int y)
         {
-            if (    (x < 0) ||
+            if ((x < 0) ||
                     (y < 0) ||
                     (x >= nWidth) ||
                     (y >= nHeight))

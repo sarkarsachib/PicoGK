@@ -59,7 +59,7 @@ namespace Yurik
         public int nAddVertex(in Vector3 vec)
         {
             m_oBoundingBox.Include(vec);
-            return _nAddVertex( m_hThis,
+            return _nAddVertex(m_hThis,
                                 in vec);
         }
 
@@ -123,7 +123,7 @@ namespace Yurik
         /// and the distance from the tip. Defaults to 1mm
         /// </param>
         /// <param name="_vecDir">Optional direction of the arrow</param>
-        public void AddArrow(   float fSizeMM = 1.0f,
+        public void AddArrow(float fSizeMM = 1.0f,
                                 Vector3? _vecDir = null)
         {
             if (nVertexCount() < 1)
@@ -157,16 +157,16 @@ namespace Yurik
 
             Vector3 vecInit = Vector3.UnitX;
 
-            if (    (vecDir == Vector3.UnitX) ||
+            if ((vecDir == Vector3.UnitX) ||
                     (vecDir == -Vector3.UnitX))
             {
                 vecInit = Vector3.UnitY;
-            }    
+            }
 
             Vector3 vecU = Vector3.Normalize(Vector3.Cross(vecDir, vecInit));
             Vector3 vecV = Vector3.Normalize(Vector3.Cross(vecDir, vecU));
 
-            Vector3 vecTip  = vecVertexAt(nVertexCount() - 1);
+            Vector3 vecTip = vecVertexAt(nVertexCount() - 1);
             Vector3 vecBase = vecTip - vecDir * fSizeMM;
 
             nAddVertex(vecBase + vecU * fSizeMM / 2f);
@@ -192,7 +192,7 @@ namespace Yurik
             if (nVertexCount() < 1)
                 return;
 
-            Vector3 vecCenter = vecVertexAt(nVertexCount()-1);
+            Vector3 vecCenter = vecVertexAt(nVertexCount() - 1);
 
             nAddVertex(vecCenter + Vector3.UnitX * fSizeMM);
             nAddVertex(vecCenter - Vector3.UnitX * fSizeMM);

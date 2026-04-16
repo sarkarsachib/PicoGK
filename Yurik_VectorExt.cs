@@ -39,7 +39,7 @@ using System.Numerics;
 namespace Yurik
 {
     public static class Vector3Ext
-	{
+    {
         static readonly float fSigma = 1e6f;
         /// <summary>
         /// Returns the normalized version of the vector
@@ -58,17 +58,17 @@ namespace Yurik
         /// <param name="vecPlaneNormalUnitVector">The normal vector of the mirror plane,
         /// expected to be a unit vector.</param>
         /// <returns>The mirrored vector.</returns>
-		public static Vector3 vecMirrored(	this Vector3 vec,
-											Vector3 vecPlanePoint,
-											Vector3 vecPlaneNormalUnitVector)
-		{
+		public static Vector3 vecMirrored(this Vector3 vec,
+                                            Vector3 vecPlanePoint,
+                                            Vector3 vecPlaneNormalUnitVector)
+        {
             // expecting normal to be unit vector
 
-            Debug.Assert(float.Abs(vecPlaneNormalUnitVector.Length()-1) < fSigma);
+            Debug.Assert(float.Abs(vecPlaneNormalUnitVector.Length() - 1) < fSigma);
 
-			return vec - 2 * Vector3.Dot(   vec - vecPlanePoint, 
+            return vec - 2 * Vector3.Dot(vec - vecPlanePoint,
                                             vecPlaneNormalUnitVector) * vecPlaneNormalUnitVector;
-		}
+        }
 
         /// <summary>
         /// Returns a transformed version of the vector.
@@ -76,10 +76,10 @@ namespace Yurik
         /// <param name="vec">The vector to be mirrored (this).</param>
         /// <param name="mat">The matrix to be applied to transform the vector.</param>
         /// <returns>The transformed vector.</returns>
-		public static Vector3 vecTransformed(	this Vector3 vec,
-												Matrix4x4 mat)
-		{
-			return Vector3.Transform(vec, mat);
-		}
-	}
+		public static Vector3 vecTransformed(this Vector3 vec,
+                                                Matrix4x4 mat)
+        {
+            return Vector3.Transform(vec, mat);
+        }
+    }
 }

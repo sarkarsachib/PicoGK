@@ -84,7 +84,7 @@ namespace Yurik
         public enum EFieldType
         {
             Unsupported = -1,
-            Voxels      = 0,
+            Voxels = 0,
             ScalarField = 1,
             VectorField = 2
         }
@@ -126,7 +126,7 @@ namespace Yurik
         /// Throws exception if unable to save
         /// </exception>
         public void SaveToFile(string strFileName)
-        {   
+        {
             // Before saving, update all the built-in metadata:
             // These values are added to every field we store from Yurik
             // to allow us to deal with future extensions, and also
@@ -135,11 +135,11 @@ namespace Yurik
             // so we divide the voxel size in mm by 1000 to get the voxel size
             // in meters
 
-            for (int n=0; n<nFieldCount(); n++)
+            for (int n = 0; n < nFieldCount(); n++)
             {
                 IFieldWithMetadata xData = xField(n);
-                xData.oMetaData()._SetValue("Yurik.Library",   Library.strName());
-                xData.oMetaData()._SetValue("Yurik.Version",   Library.strVersion());
+                xData.oMetaData()._SetValue("Yurik.Library", Library.strName());
+                xData.oMetaData()._SetValue("Yurik.Version", Library.strVersion());
                 xData.oMetaData()._SetValue("Yurik.VoxelSize", Library.fVoxelSizeMM / 1000f);
             }
 
@@ -178,7 +178,7 @@ namespace Yurik
         /// </exception>
         public Voxels voxGet(string strName)
         {
-            for (int n=0; n<nFieldCount(); n++)
+            for (int n = 0; n < nFieldCount(); n++)
             {
                 if (String.Compare(strFieldName(n), strName, true) == 0)
                 {
@@ -237,7 +237,7 @@ namespace Yurik
         /// </exception>
         public ScalarField oGetScalarField(string strName)
         {
-            for (int n=0; n<nFieldCount(); n++)
+            for (int n = 0; n < nFieldCount(); n++)
             {
                 if (String.Compare(strFieldName(n), strName, true) == 0)
                 {
@@ -296,7 +296,7 @@ namespace Yurik
         /// </exception>
         public VectorField oGetVectorField(string strName)
         {
-            for (int n=0; n<nFieldCount(); n++)
+            for (int n = 0; n < nFieldCount(); n++)
             {
                 if (String.Compare(strFieldName(n), strName, true) == 0)
                 {
@@ -391,10 +391,10 @@ namespace Yurik
                 case 0:
                     return "Voxels";
 
-                 case 1:
+                case 1:
                     return "ScalarField";
 
-                 case 2:
+                case 2:
                     return "VectorField";
 
                 default:

@@ -48,7 +48,7 @@ namespace Yurik
         public int Y;
         public int Z;
 
-        public Coord(   int x,
+        public Coord(int x,
                         int y,
                         int z)
         {
@@ -65,7 +65,7 @@ namespace Yurik
         public int B;
         public int C;
 
-        public Triangle(    int a,
+        public Triangle(int a,
                             int b,
                             int c)
         {

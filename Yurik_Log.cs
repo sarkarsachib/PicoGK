@@ -40,7 +40,7 @@ namespace Yurik
 {
     public class LogFile : IDisposable
     {
-        public LogFile( in string strFileName = "",
+        public LogFile(in string strFileName = "",
                         in bool bOutputToConsole = true)
         {
             m_bOutputToConsole = bOutputToConsole;
@@ -49,7 +49,7 @@ namespace Yurik
 
             if (strFile == "")
             {
-                strFile = Path.Combine( Utils.strDocumentsFolder(),
+                strFile = Path.Combine(Utils.strDocumentsFolder(),
                                         Utils.strDateTimeFilename("Yurik_", ".log"));
             }
 
@@ -86,14 +86,14 @@ namespace Yurik
             Log("\n----------------------------------------\n");
         }
 
-        public void Log(    in string strFormat,
+        public void Log(in string strFormat,
                             params object[] args)
         {
 
             float fSeconds = (m_oStopwatch.ElapsedMilliseconds / 1000.0f) - m_fTimeStartSeconds;
             float fDiff = fSeconds - m_fLastTimeSeconds;
 
-            string strPrefix    = string.Format("{0,7:0.}s ", fSeconds)
+            string strPrefix = string.Format("{0,7:0.}s ", fSeconds)
                                 + string.Format("{0,6:0.0}+ ", fDiff);
 
             string[] lines = string.Format(strFormat, args).Split(new char[] { '\n' });
@@ -104,7 +104,7 @@ namespace Yurik
                 {
                     if (m_bOutputToConsole)
                         Console.WriteLine(strPrefix + str);
-                        
+
                     m_oWriter?.WriteLine(strPrefix + str);
 
                     m_oWriter?.Flush();
@@ -116,7 +116,7 @@ namespace Yurik
         public void LogTime()
         {
             Log("Current time (UTC): " + DateTime.UtcNow.ToString("yyyy-MM-dd HH:mm:ss (UTC)"));
-            Log("Current local time: " + DateTime.Now   .ToString("yyyy-MM-dd HH:mm:ss (zzz)"));
+            Log("Current local time: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss (zzz)"));
         }
 
         ~LogFile()

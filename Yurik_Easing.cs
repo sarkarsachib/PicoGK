@@ -40,10 +40,10 @@ namespace Yurik
     /// an "eased" curve of the values, also from 0..1
     /// </summary>
     public class Easing
-	{
+    {
         public static float fEaseSineIn(float x)
         {
-            return 1.0f - float.Cos((x* float.Pi) / 2.0f);
+            return 1.0f - float.Cos((x * float.Pi) / 2.0f);
         }
 
         public static float fEaseSineOut(float x)
@@ -84,24 +84,27 @@ namespace Yurik
         }
 
         public static float fEaseCubicInOut(float x)
-		{
+        {
             return x < 0.5 ?
                 4 * x * x * x :
                 1 - float.Pow(-2 * x + 2, 3) / 2;
         }
 
-        public enum EEasing {   LINEAR,
-                                SINE_IN,
-                                SINE_OUT,
-                                SINE_INOUT,
-                                QUAD_IN,
-                                QUAD_OUT,
-                                QUAD_INOUT,
-                                CUBIC_IN,
-                                CUBIC_OUT,
-                                CUBIC_INOUT};
+        public enum EEasing
+        {
+            LINEAR,
+            SINE_IN,
+            SINE_OUT,
+            SINE_INOUT,
+            QUAD_IN,
+            QUAD_OUT,
+            QUAD_INOUT,
+            CUBIC_IN,
+            CUBIC_OUT,
+            CUBIC_INOUT
+        };
 
-        public static float fEasingFunction(    float x,
+        public static float fEasingFunction(float x,
                                                 EEasing eEasing)
         {
             switch (eEasing)
@@ -130,6 +133,6 @@ namespace Yurik
 
             throw new InvalidOperationException("Unknown easing function - forgot to implement?");
         }
-	}
+    }
 }
 

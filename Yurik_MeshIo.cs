@@ -59,7 +59,7 @@ namespace Yurik
         /// <param name="fPostScale">Scale parameter to be applied before offset</param>
         /// <param name="vecPostOffsetMM">Offset parameter to be applied last</param>
         /// <returns>Returns a valid mesh in any case. If file was invalid, the mesh may be empty.</returns>
-        public static Mesh mshFromStlFile(  string strFilePath,
+        public static Mesh mshFromStlFile(string strFilePath,
                                             EStlUnit eLoadUnit = EStlUnit.AUTO, // use units from file, or mm when not spec'd
                                             float fPostScale = 1.0f,
                                             Vector3? vecPostOffsetMM = null)
@@ -68,7 +68,7 @@ namespace Yurik
 
             using (FileStream oFile = new FileStream(strFilePath, FileMode.Open, FileAccess.Read))
             {
-                oMesh = mshFromStlFile( oFile,
+                oMesh = mshFromStlFile(oFile,
                                         eLoadUnit,
                                         fPostScale,
                                         vecPostOffsetMM);
@@ -78,10 +78,10 @@ namespace Yurik
         }
 
 
-        public static Mesh mshFromStlFile(  FileStream  oFile,
-                                            EStlUnit    eLoadUnit       = EStlUnit.AUTO, // use units from file, or mm when not spec'd
-                                            float       fPostScale      = 1.0f,
-                                            Vector3?    vecPostOffsetMM = null)
+        public static Mesh mshFromStlFile(FileStream oFile,
+                                            EStlUnit eLoadUnit = EStlUnit.AUTO, // use units from file, or mm when not spec'd
+                                            float fPostScale = 1.0f,
+                                            Vector3? vecPostOffsetMM = null)
         {
             string strHeader = "";
 
@@ -89,7 +89,7 @@ namespace Yurik
 
             if (vecPostOffsetMM is not null)
                 vecOffset = (Vector3)vecPostOffsetMM;
-            
+
             using (BinaryReader oReader = new BinaryReader(oFile, Encoding.ASCII))
             {
                 byte[] abyHeader = new byte[80];
@@ -159,14 +159,14 @@ namespace Yurik
 
                 if (bAscii)
                 {
-                    oMesh.DoReadMeshFromAsciiStl(   oReader,
+                    oMesh.DoReadMeshFromAsciiStl(oReader,
                                                     eLoadUnit,
                                                     fPostScale,
                                                     vecOffset);
                 }
                 else
                 {
-                    oMesh.DoReadMeshFromBinaryStl(  oReader,
+                    oMesh.DoReadMeshFromBinaryStl(oReader,
                                                     eLoadUnit,
                                                     fScale,
                                                     vecOffset);
@@ -203,7 +203,7 @@ namespace Yurik
         /// unit.</param>
         /// <param name="vecOffsetMM">Offset applied while still in mm units</param>
         /// <param name="fScale">Scale applied after offset, while still in mm units</param>
-        public void SaveToStlFile(  string strFilePath,
+        public void SaveToStlFile(string strFilePath,
                                     EStlUnit eUnit = EStlUnit.AUTO,
                                     Vector3? vecOffsetMM = null,
                                     float fScale = 1.0f)
@@ -214,20 +214,20 @@ namespace Yurik
             }
         }
 
-        public void SaveToStlFile(  FileStream oFile,
+        public void SaveToStlFile(FileStream oFile,
                                     EStlUnit eUnit = EStlUnit.AUTO,
                                     Vector3? vecOffsetMM = null,
                                     float fScale = 1.0f)
         {
             Vector3 vecOffset = new Vector3(0.0f);
 
-            if (vecOffsetMM is not null)    
+            if (vecOffsetMM is not null)
                 vecOffset = (Vector3)vecOffsetMM;
 
             if (eUnit == EStlUnit.AUTO)
                 eUnit = m_eLoadUnits;
 
-  
+
             using (BinaryWriter oWriter = new BinaryWriter(oFile, Encoding.ASCII))
             {
                 string strHeader = "Yurik ";
@@ -296,7 +296,7 @@ namespace Yurik
             }
         }
 
-        void DoReadMeshFromAsciiStl(    BinaryReader oReader,
+        void DoReadMeshFromAsciiStl(BinaryReader oReader,
                                         EStlUnit eLoadUnit,
                                         float fPostScale,
                                         Vector3 vecPostOffsetMM)
@@ -322,7 +322,7 @@ namespace Yurik
             public ushort AttributeByteCount;
         }
 
-        void DoReadMeshFromBinaryStl(   BinaryReader oReader,
+        void DoReadMeshFromBinaryStl(BinaryReader oReader,
                                         EStlUnit eLoadUnit,
                                         float fPostScale,
                                         Vector3 vecPostOffsetMM)

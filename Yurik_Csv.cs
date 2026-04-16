@@ -40,13 +40,13 @@ namespace Yurik
         int nMaxColumnCount();
 
         string strColumnId(int nColumn);
-        
-        bool bFindColumn(  string strColumnName,
+
+        bool bFindColumn(string strColumnName,
                             out int nColumn);
 
         int nRowCount();
 
-        string strGetAt( int nRow,
+        string strGetAt(int nRow,
                          int nColumn);
 
         void SetColumnIds(IEnumerable<string> astrIds);
@@ -59,7 +59,7 @@ namespace Yurik
         {
             m_oColumnIDs = new(astrColumnIDs ?? new List<string>());
         }
-        public CsvTable(  string strFilePath,
+        public CsvTable(string strFilePath,
                           string strDelimiters = ",")
         {
             using (StreamReader oReader = new StreamReader(strFilePath))
@@ -75,7 +75,7 @@ namespace Yurik
                         continue;
 
                     string[] astrParts = strLine.Split(strDelimiters);
-                    
+
                     List<string> oColumns = new List<string>();
 
                     foreach (string str in astrParts)
@@ -101,7 +101,7 @@ namespace Yurik
             }
         }
 
-        public void Save(    string strFilePath,
+        public void Save(string strFilePath,
                              string strDelimiter = ",")
         {
             using (StreamWriter oWriter = new StreamWriter(strFilePath))
@@ -142,7 +142,7 @@ namespace Yurik
             return m_nMaxColumnCount;
         }
 
-        public string strGetAt( int nRow,
+        public string strGetAt(int nRow,
                                 int nColumn)
         {
             if (nRow >= m_oRows.Count)
@@ -172,7 +172,7 @@ namespace Yurik
             return true;
         }
 
-        public bool bGetAt( in string strKey,
+        public bool bGetAt(in string strKey,
                             ref string strVal)
         {
             string[] astr = strKey.Split(".");
@@ -184,12 +184,12 @@ namespace Yurik
             }
 
             int nColumn;
-            if (!bFindColumn(   astr[1],
+            if (!bFindColumn(astr[1],
                                 out nColumn))
             {
                 return false;
             }
-            
+
             foreach (List<string> oColumns in m_oRows)
             {
                 if (oColumns.Count <= m_nKeyColumn)
@@ -201,7 +201,7 @@ namespace Yurik
                     {
                         strVal = oColumns[nColumn];
                     }
-                   
+
                     return true;
                 }
             }
@@ -209,7 +209,7 @@ namespace Yurik
             return false;
         }
 
-        public bool bFindColumn(    string strColumnName,
+        public bool bFindColumn(string strColumnName,
                                     out int nColumn)
         {
             // find column
@@ -230,7 +230,7 @@ namespace Yurik
 
         public string strColumnId(int nColumn)
         {
-            if (nColumn > nMaxColumnCount()-1)
+            if (nColumn > nMaxColumnCount() - 1)
                 return "";
 
             return m_oColumnIDs[nColumn];
@@ -249,10 +249,10 @@ namespace Yurik
             m_nMaxColumnCount = int.Max(m_nMaxColumnCount, oRow.Count);
         }
 
-        List<string>        m_oColumnIDs;
-        List<List<string>>  m_oRows             = new List<List<string>>();
-        int                 m_nKeyColumn        = 0;
-        int                 m_nMaxColumnCount   = 0;
+        List<string> m_oColumnIDs;
+        List<List<string>> m_oRows = new List<List<string>>();
+        int m_nKeyColumn = 0;
+        int m_nMaxColumnCount = 0;
 
     } // class YurikCsv
 } // namespace

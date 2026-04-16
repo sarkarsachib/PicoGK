@@ -63,11 +63,11 @@ namespace Yurik
         /// <param name="fTimeOut"></param> T
         /// imeout in seconds
         /// <returns></returns>true if file exists, false if timeout
-        static public bool bWaitForFileExistence(string strFile, float fTimeOut=1000000f)
+        static public bool bWaitForFileExistence(string strFile, float fTimeOut = 1000000f)
         {
             Stopwatch oWatch = new();
             oWatch.Start();
-            long lTimeout = oWatch.ElapsedMilliseconds + (long) (fTimeOut * 1000);
+            long lTimeout = oWatch.ElapsedMilliseconds + (long)(fTimeOut * 1000);
 
             while (oWatch.ElapsedMilliseconds < lTimeout)
             {
@@ -180,8 +180,7 @@ namespace Yurik
         /// <returns>The folder in which your executable resides</returns>
         static public string strExecutableFolder()
         {
-            string strExePath = System.Reflection.Assembly.GetExecutingAssembly().Location ?? "";
-            return System.IO.Path.GetDirectoryName(strExePath) ?? "";
+            return AppDomain.CurrentDomain.BaseDirectory;
         }
 
         /// <summary>
@@ -190,7 +189,7 @@ namespace Yurik
         /// <param name="strPrefix">Prepended before the date/time stamp</param>
         /// <param name="strPostfix">Appended after the date/time stamp</param>
         /// <returns></returns>
-        static public string strDateTimeFilename(   in string strPrefix,
+        static public string strDateTimeFilename(in string strPrefix,
                                                     in string strPostfix)
         {
             return strPrefix + DateTimeOffset.Now.ToString("yyyyMMdd_HHmmss") + strPostfix;
@@ -214,7 +213,7 @@ namespace Yurik
             return str[..iMaxCharacters];
         }
 
-        static public void SetMatrixRow(    ref Matrix4x4 mat, uint n,
+        static public void SetMatrixRow(ref Matrix4x4 mat, uint n,
                                             float f1, float f2, float f3, float f4)
         {
             // An insane person wrote Matrix4x4
@@ -250,7 +249,7 @@ namespace Yurik
             }
         }
 
-        static public Matrix4x4 matLookAt(  Vector3 vecEye,
+        static public Matrix4x4 matLookAt(Vector3 vecEye,
                                             Vector3 vecLookAt)
         {
             Vector3 vecZ = new(0.0f, 0.0f, 1.0f);
@@ -278,11 +277,11 @@ namespace Yurik
             return mshCreateCube(oBox.vecSize(), oBox.vecCenter());
         }
 
-        static public Mesh mshCreateCube(   Vector3? vecScale       = null,
-                                            Vector3? vecOffsetMM    = null)
+        static public Mesh mshCreateCube(Vector3? vecScale = null,
+                                            Vector3? vecOffsetMM = null)
         {
-            Vector3 vecS        = vecScale      ?? new Vector3(1.0f);
-            Vector3 vecOffset   = vecOffsetMM   ?? new Vector3(0.0f);
+            Vector3 vecS = vecScale ?? new Vector3(1.0f);
+            Vector3 vecOffset = vecOffsetMM ?? new Vector3(0.0f);
 
             Mesh oMesh = new Mesh();
 
@@ -325,12 +324,12 @@ namespace Yurik
             return oMesh;
         }
 
-        static public Mesh mshCreateCylinder( Vector3? vecScale     = null,
-                                              Vector3? vecOffsetMM  = null,
+        static public Mesh mshCreateCylinder(Vector3? vecScale = null,
+                                              Vector3? vecOffsetMM = null,
                                               int iSides = 0)
         {
-            Vector3 vecS        = vecScale ?? new Vector3(1.0f);
-            Vector3 vecOffset   = vecOffsetMM ?? new Vector3(0.0f);
+            Vector3 vecS = vecScale ?? new Vector3(1.0f);
+            Vector3 vecOffset = vecOffsetMM ?? new Vector3(0.0f);
 
             float fA = vecS.X * 0.5f;
             float fB = vecS.Y * 0.5f;
@@ -343,11 +342,11 @@ namespace Yurik
                 //P ≈ π [ 3 (a + b) - √[(3a + b) (a + 3b) ]]
                 //P ≈ π(a + b) [ 1 + (3h) / (10 + √(4 - 3h) ) ], where h = (a - b)2/(a + b)2
 
-                float fP    = float.Pi * (3.0f * (fVoxA + fVoxB)
+                float fP = float.Pi * (3.0f * (fVoxA + fVoxB)
                                 - float.Sqrt((3.0f * fVoxA + fVoxB)
                                 * (fVoxA + 3.0f * fVoxB)));
 
-                iSides      = 2 * (int) float.Ceiling(fP);
+                iSides = 2 * (int)float.Ceiling(fP);
             }
 
             if (iSides < 3)
@@ -358,22 +357,22 @@ namespace Yurik
             Mesh oMesh = new Mesh();
 
             Vector3 vecBottomCenter = vecOffset;
-            vecBottomCenter.Z      -= vecS.Z * 0.5f;
-            Vector3 vecTopCenter    = vecBottomCenter;
-            vecTopCenter.Z         += vecS.Z;
-            Vector3 vecPrevBottom   = new Vector3(fA, 0, 0) + vecBottomCenter;
-            Vector3 vecPrevTop      = vecPrevBottom;
-            vecPrevTop.Z           += vecS.Z;
+            vecBottomCenter.Z -= vecS.Z * 0.5f;
+            Vector3 vecTopCenter = vecBottomCenter;
+            vecTopCenter.Z += vecS.Z;
+            Vector3 vecPrevBottom = new Vector3(fA, 0, 0) + vecBottomCenter;
+            Vector3 vecPrevTop = vecPrevBottom;
+            vecPrevTop.Z += vecS.Z;
 
-            float fStep             = MathF.PI * 2.0f / iSides;
+            float fStep = MathF.PI * 2.0f / iSides;
 
             for (int i = 1; i <= iSides; ++i)
             {
                 float fAngle = i * fStep;
 
-                Vector3 vecThisBottom   = new Vector3(MathF.Cos(fAngle) * fA, MathF.Sin(fAngle) * fB, 0.0f) + vecBottomCenter;
-                Vector3 vecThisTop      = vecThisBottom;
-                vecThisTop.Z           += vecS.Z;
+                Vector3 vecThisBottom = new Vector3(MathF.Cos(fAngle) * fA, MathF.Sin(fAngle) * fB, 0.0f) + vecBottomCenter;
+                Vector3 vecThisTop = vecThisBottom;
+                vecThisTop.Z += vecS.Z;
 
                 //top cap
                 oMesh.nAddTriangle(vecTopCenter, vecPrevTop, vecThisTop);
@@ -385,8 +384,8 @@ namespace Yurik
                 //bottom cap
                 oMesh.nAddTriangle(vecBottomCenter, vecThisBottom, vecPrevBottom);
 
-                vecPrevBottom   = vecThisBottom;
-                vecPrevTop      = vecThisTop;
+                vecPrevBottom = vecThisBottom;
+                vecPrevTop = vecThisTop;
             }
 
             return oMesh;
@@ -396,8 +395,8 @@ namespace Yurik
                                          Vector3? vecOffsetMM = null,
                                          int iSides = 0)
         {
-            Vector3 vecS        = vecScale ?? new Vector3(1.0f);
-            Vector3 vecOffset   = vecOffsetMM ?? new Vector3(0.0f);
+            Vector3 vecS = vecScale ?? new Vector3(1.0f);
+            Vector3 vecOffset = vecOffsetMM ?? new Vector3(0.0f);
 
             float fA = vecS.X * 0.5f;
             float fB = vecS.Y * 0.5f;
@@ -407,7 +406,7 @@ namespace Yurik
                 float fVoxA = fA / Library.fVoxelSizeMM;
                 float fVoxB = fB / Library.fVoxelSizeMM;
 
-                float fP =  float.Pi * (3.0f * (fVoxA + fVoxB)
+                float fP = float.Pi * (3.0f * (fVoxA + fVoxB)
                             - float.Sqrt((3.0f * fVoxA + fVoxB)
                             * (fVoxA + 3.0f * fVoxB)));
 
@@ -422,10 +421,10 @@ namespace Yurik
             Mesh oMesh = new Mesh();
 
             Vector3 vecBottomCenter = vecOffset;
-            vecBottomCenter.Z      -= vecS.Z * 0.5f;
-            Vector3 vecTop          = vecBottomCenter;
-            vecTop.Z               += vecS.Z;
-            Vector3 vecPrevBottom   = new Vector3(fA, 0, 0) + vecBottomCenter;
+            vecBottomCenter.Z -= vecS.Z * 0.5f;
+            Vector3 vecTop = vecBottomCenter;
+            vecTop.Z += vecS.Z;
+            Vector3 vecPrevBottom = new Vector3(fA, 0, 0) + vecBottomCenter;
 
             float fStep = MathF.PI * 2.0f / iSides;
 
@@ -437,7 +436,7 @@ namespace Yurik
 
                 //side
                 oMesh.nAddTriangle(vecPrevBottom, vecThisBottom, vecTop);
-   
+
                 //bottom cap
                 oMesh.nAddTriangle(vecBottomCenter, vecThisBottom, vecPrevBottom);
 
@@ -448,16 +447,16 @@ namespace Yurik
         }
 
         static void GeoSphereTriangle(Vector3 vecA,
-					                  Vector3 vecB,
-					                  Vector3 vecC,
-					                  Vector3 vecOffset,
-					                  Vector3 vecRadii,
+                                      Vector3 vecB,
+                                      Vector3 vecC,
+                                      Vector3 vecOffset,
+                                      Vector3 vecRadii,
                                       int iRecursionDepth,
-					                  Mesh oTarget)
+                                      Mesh oTarget)
         {
-	        if (iRecursionDepth > 0)
-	        {
-		        Vector3 vecAB = vecOffset + ((vecA + vecB) * 0.5f - vecOffset);
+            if (iRecursionDepth > 0)
+            {
+                Vector3 vecAB = vecOffset + ((vecA + vecB) * 0.5f - vecOffset);
                 Vector3 vecBC = vecOffset + ((vecB + vecC) * 0.5f - vecOffset);
                 Vector3 vecCA = vecOffset + ((vecC + vecA) * 0.5f - vecOffset);
 
@@ -470,8 +469,8 @@ namespace Yurik
                 GeoSphereTriangle(vecAB, vecBC, vecCA, vecOffset, vecRadii, iRecursionDepth - 1, oTarget);
                 GeoSphereTriangle(vecCA, vecBC, vecC, vecOffset, vecRadii, iRecursionDepth - 1, oTarget);
             }
-	        else
-	        {
+            else
+            {
                 oTarget.nAddTriangle(vecA, vecB, vecC);
             }
         }
@@ -493,21 +492,21 @@ namespace Yurik
                                               Vector3? vecOffsetMM = null,
                                               int iSubdivisions = 0)
         {
-            Vector3 vecS        = vecScale ?? new Vector3(1.0f);
-            Vector3 vecOffset   = vecOffsetMM ?? new Vector3(0.0f);
+            Vector3 vecS = vecScale ?? new Vector3(1.0f);
+            Vector3 vecOffset = vecOffsetMM ?? new Vector3(0.0f);
 
-            Mesh oMesh          = new Mesh();
+            Mesh oMesh = new Mesh();
 
-            Vector3 vecRadii    = vecS * 0.5f;
-            Vector3 vecRadii2   = vecRadii * vecRadii;
+            Vector3 vecRadii = vecS * 0.5f;
+            Vector3 vecRadii2 = vecRadii * vecRadii;
 
-            float fCoeff        = fSquared(2.0f * MathF.Sin(MathF.PI * 0.2f));
-            Vector3 vecPenta    = new Vector3(
+            float fCoeff = fSquared(2.0f * MathF.Sin(MathF.PI * 0.2f));
+            Vector3 vecPenta = new Vector3(
                 (2.0f * MathF.Sqrt(fCoeff * vecRadii2.X - vecRadii2.X)) / fCoeff,
                 (2.0f * MathF.Sqrt(fCoeff * vecRadii2.Y - vecRadii2.Y)) / fCoeff,
                 (2.0f * MathF.Sqrt(fCoeff * vecRadii2.Z - vecRadii2.Z)) / fCoeff);
 
-            float fPentaDZ      = MathF.Sqrt(vecRadii2.Z - fSquared(vecPenta.Z));
+            float fPentaDZ = MathF.Sqrt(vecRadii2.Z - fSquared(vecPenta.Z));
 
             Vector3[] avecPOffs = new Vector3[5];
 
@@ -518,10 +517,10 @@ namespace Yurik
             }
 
             //estimate the number of subdivisions based on the sphere or ellipsoid surface area
-            
+
             if (iSubdivisions <= 0)
             {
-                int iTargetTriangles = (int) MathF.Ceiling(
+                int iTargetTriangles = (int)MathF.Ceiling(
                                     fApproxEllipsoidSurfaceArea(vecRadii)
                                     / Library.fVoxelSizeMM
                                     / Library.fVoxelSizeMM);
@@ -535,11 +534,11 @@ namespace Yurik
                     iTriangles = 20 * (1 << (2 * iSubdivisions));
                 }
             }
-            
+
             //top cap
             Vector3 vecCap = vecOffset;
 
-            vecCap.Z      += vecRadii.Z;
+            vecCap.Z += vecRadii.Z;
 
             for (int i = 0; i < 5; i++)
             {

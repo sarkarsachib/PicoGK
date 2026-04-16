@@ -41,8 +41,8 @@ namespace Yurik
 {
     public interface ITraverseScalarField
     {
-        public abstract void InformActiveValue( in Vector3  vecPosition,
-                                                float       fValue);
+        public abstract void InformActiveValue(in Vector3 vecPosition,
+                                                float fValue);
     }
 
     public partial class ScalarField : IImplicit
@@ -66,7 +66,7 @@ namespace Yurik
         /// </summary>
         public ScalarField()
             : this(_hCreate())
-        {}
+        { }
 
         /// <summary>
         /// Copy constructor, create a duplicate
@@ -75,7 +75,7 @@ namespace Yurik
         /// <param name="oSource">Source to copy from</param>
         public ScalarField(in ScalarField oSource)
             : this(_hCreateCopy(oSource.m_hThis))
-        {}
+        { }
 
         /// <summary>
         /// Creates a scalar field from an existing voxel field
@@ -92,11 +92,11 @@ namespace Yurik
             : this(_hCreateFromVoxels(oVoxels.m_hThis))
         { }
 
-        public ScalarField( Voxels oVoxels,
+        public ScalarField(Voxels oVoxels,
                             float fValue,
                             float fSdThreshold = 0.5f)
             : this(_hBuildFromVoxels(oVoxels.m_hThis, fValue, fSdThreshold))
-        {}
+        { }
 
         /// <summary>
         /// Sets the value at the specified position in mm
@@ -106,8 +106,8 @@ namespace Yurik
         /// </summary>
         /// <param name="vecPosition">Position in mm</param>
         /// <param name="fValue">Value</param>
-        public void SetValue(   Vector3 vecPosition,
-                                float   fValue)
+        public void SetValue(Vector3 vecPosition,
+                                float fValue)
         {
             _SetValue(m_hThis, vecPosition, fValue);
         }
@@ -123,7 +123,7 @@ namespace Yurik
         /// false:  the specified position doesn't contain a value
         /// true:   the specified position contains a value
         /// </returns>
-        public bool bGetValue(  Vector3 vecPosition,
+        public bool bGetValue(Vector3 vecPosition,
                                 out float fValue)
         {
             fValue = 0.0f;
@@ -148,21 +148,21 @@ namespace Yurik
         /// <param name="nXSize">Size in x direction in voxels</param>
         /// <param name="nYSize">Size in y direction in voxels</param>
         /// <param name="nZSize">Size in z direction in voxels</param>
-        public void GetVoxelDimensions( out int nXOrigin,
+        public void GetVoxelDimensions(out int nXOrigin,
                                         out int nYOrigin,
                                         out int nZOrigin,
                                         out int nXSize,
                                         out int nYSize,
                                         out int nZSize)
         {
-            nXOrigin    = 0;
-            nYOrigin    = 0;
-            nZOrigin    = 0;
-            nXSize      = 0;
-            nYSize      = 0;
-            nZSize      = 0;
+            nXOrigin = 0;
+            nYOrigin = 0;
+            nZOrigin = 0;
+            nXSize = 0;
+            nYSize = 0;
+            nZSize = 0;
 
-            _GetVoxelDimensions(    m_hThis,
+            _GetVoxelDimensions(m_hThis,
                                     ref nXOrigin,
                                     ref nYOrigin,
                                     ref nZOrigin,
@@ -177,18 +177,18 @@ namespace Yurik
         /// <param name="nXSize">Size in x direction in voxels</param>
         /// <param name="nYSize">Size in y direction in voxels</param>
         /// <param name="nZSize">Size in z direction in voxels</param>
-        public void GetVoxelDimensions( out int nXSize,
+        public void GetVoxelDimensions(out int nXSize,
                                         out int nYSize,
                                         out int nZSize)
         {
-            int nXOrigin    = 0; // unused in this function
-            int nYOrigin    = 0; // unused in this function
-            int nZOrigin    = 0; // unused in this function
-            nXSize          = 0;
-            nYSize          = 0;
-            nZSize          = 0;
+            int nXOrigin = 0; // unused in this function
+            int nYOrigin = 0; // unused in this function
+            int nZOrigin = 0; // unused in this function
+            nXSize = 0;
+            nYSize = 0;
+            nZSize = 0;
 
-            _GetVoxelDimensions(    m_hThis,
+            _GetVoxelDimensions(m_hThis,
                                     ref nXOrigin,
                                     ref nYOrigin,
                                     ref nZOrigin,
@@ -208,7 +208,7 @@ namespace Yurik
         /// </summary>
         /// <param name="nZSlice">Slice to retrieve. 0 is at the bottom.</param>
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
-        public void GetVoxelSlice(  in int nZSlice,
+        public void GetVoxelSlice(in int nZSlice,
                                     ref ImageGrayScale img)
         {
             GCHandle oPinnedArray = GCHandle.Alloc(img.m_afValues, GCHandleType.Pinned);
@@ -257,15 +257,15 @@ namespace Yurik
         /// <returns>Bounding box of all active voxels</returns>
         public BBox3 oBoundingBox()
         {
-            GetVoxelDimensions( out int iXOrigin,
+            GetVoxelDimensions(out int iXOrigin,
                                 out int iYOrigin,
                                 out int iZOrigin,
                                 out int nXSize,
                                 out int nYSize,
                                 out int nZSize);
 
-            return new( Library.vecVoxelsToMm(iXOrigin, iYOrigin, iZOrigin),
-                        Library.vecVoxelsToMm(  iXOrigin + nXSize,
+            return new(Library.vecVoxelsToMm(iXOrigin, iYOrigin, iZOrigin),
+                        Library.vecVoxelsToMm(iXOrigin + nXSize,
                                                 iYOrigin + nYSize,
                                                 iZOrigin + nZSize));
         }

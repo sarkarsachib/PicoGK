@@ -57,7 +57,7 @@ namespace Yurik
             public void Do(float fFactor)
             {
                 double dAngle = (fFactor * m_fDegrees * Math.PI) / 180.0;
-                Matrix4x4 matMul = Matrix4x4.CreateFromQuaternion(  Quaternion.CreateFromAxisAngle(m_vecAxis,
+                Matrix4x4 matMul = Matrix4x4.CreateFromQuaternion(Quaternion.CreateFromAxisAngle(m_vecAxis,
                                                                     (float)dAngle));
 
                 Matrix4x4 mat = m_matInit * matMul;
@@ -114,4 +114,3 @@ namespace Yurik
         AnimationQueue m_oAnims = new();
     }
 }
-    
