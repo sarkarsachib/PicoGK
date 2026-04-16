@@ -54,22 +54,22 @@ namespace Yurik
         /// <param name="_clrOutside">Color used for the voxels on the outside</param>
         /// <param name="_clrDefect">Color used for defective voxels</param>
         /// <returns>A color image containing the encoded SDF</returns>
-        public static ImageColor imgEncodeFromSdf(  ScalarField oField,
+        public static ImageColor imgEncodeFromSdf(ScalarField oField,
                                                     float fBackgroundValue,
                                                     int nSlice,
-                                                    ColorFloat? _clrBackground  = null,
-                                                    ColorFloat? _clrSurface     = null,
-                                                    ColorFloat? _clrInside      = null,
-                                                    ColorFloat? _clrOutside     = null,
-                                                    ColorFloat? _clrDefect      = null)
+                                                    ColorFloat? _clrBackground = null,
+                                                    ColorFloat? _clrSurface = null,
+                                                    ColorFloat? _clrInside = null,
+                                                    ColorFloat? _clrOutside = null,
+                                                    ColorFloat? _clrDefect = null)
         {
-            ColorFloat clrBackGround    = _clrBackground ?? new ColorFloat("0066ff");
-            ColorFloat clrSurface       = _clrSurface    ?? new ColorFloat("FF");
-            ColorFloat clrInside        = _clrInside     ?? new ColorFloat("cc33ff");
-            ColorFloat clrOutside       = _clrOutside    ?? new ColorFloat("33cc33");
-            ColorFloat clrDefect        = _clrDefect     ?? new ColorFloat("ff5400");
-            
-            oField.GetVoxelDimensions(  out int nXOrigin,
+            ColorFloat clrBackGround = _clrBackground ?? new ColorFloat("0066ff");
+            ColorFloat clrSurface = _clrSurface ?? new ColorFloat("FF");
+            ColorFloat clrInside = _clrInside ?? new ColorFloat("cc33ff");
+            ColorFloat clrOutside = _clrOutside ?? new ColorFloat("33cc33");
+            ColorFloat clrDefect = _clrDefect ?? new ColorFloat("ff5400");
+
+            oField.GetVoxelDimensions(out int nXOrigin,
                                         out int nYOrigin,
                                         out int nZOrigin,
                                         out int nXSize,
@@ -77,15 +77,15 @@ namespace Yurik
                                         out int nZSize);
 
             ImageColor imgResult = new(nXSize, nYSize);
-            
+
             if (nSlice >= nZSize)
                 return imgResult;
 
-            for (int x=0; x<nXSize; x++)
+            for (int x = 0; x < nXSize; x++)
             {
-                for (int y=0; y<nYSize; y++)
+                for (int y = 0; y < nYSize; y++)
                 {
-                    Vector3 vecCoord = Library.vecVoxelsToMm(   nXOrigin + x,
+                    Vector3 vecCoord = Library.vecVoxelsToMm(nXOrigin + x,
                                                                 nYOrigin + y,
                                                                 nZOrigin + nSlice);
 
@@ -127,7 +127,7 @@ namespace Yurik
                             }
                             else
                             {
-                                clr.L = 0.7f - (fValue / fBackgroundValue / 2.0f); 
+                                clr.L = 0.7f - (fValue / fBackgroundValue / 2.0f);
                             }
                         }
 
@@ -137,7 +137,7 @@ namespace Yurik
                         }
                     }
 
-                    imgResult.SetValue(x,y,clr);
+                    imgResult.SetValue(x, y, clr);
                 }
             }
 
@@ -151,10 +151,10 @@ namespace Yurik
         /// <param name="oField">Field to analyze</param>
         /// <param name="nSlice">Slice to analyze</param>
         /// <returns>true if a defective voxel is found</returns>
-        public static bool bDoesSliceContainDefect( ScalarField oField,
+        public static bool bDoesSliceContainDefect(ScalarField oField,
                                                     int nSlice)
         {
-            oField.GetVoxelDimensions(  out int nXOrigin,
+            oField.GetVoxelDimensions(out int nXOrigin,
                                         out int nYOrigin,
                                         out int nZOrigin,
                                         out int nXSize,
@@ -164,11 +164,11 @@ namespace Yurik
             if (nSlice >= nZSize)
                 return false;
 
-            for (int x=0; x<nXSize; x++)
+            for (int x = 0; x < nXSize; x++)
             {
-                for (int y=0; y<nYSize; y++)
+                for (int y = 0; y < nYSize; y++)
                 {
-                    Vector3 vecCoord = Library.vecVoxelsToMm(   nXOrigin + x,
+                    Vector3 vecCoord = Library.vecVoxelsToMm(nXOrigin + x,
                                                                 nYOrigin + y,
                                                                 nZOrigin + nSlice);
 
@@ -199,20 +199,20 @@ namespace Yurik
         /// <param name="_clrOutside">Color used for the voxels on the outside</param>
         /// <param name="_clrDefect">Color used for defective voxels</param>
         /// <returns>Returns true if defective voxels were found</returns>
-        public static bool bVisualizeSdfSlicesAsTgaStack(   ScalarField oField,
+        public static bool bVisualizeSdfSlicesAsTgaStack(ScalarField oField,
                                                             float fBackgroundValue,
                                                             string strPath,
-                                                            string strFilePrefix        = "Sdf_",
-                                                            bool bOnlyDefective         = false,
-                                                            ColorFloat? _clrBackground  = null,
-                                                            ColorFloat? _clrSurface     = null,
-                                                            ColorFloat? _clrInside      = null,
-                                                            ColorFloat? _clrOutside     = null,
-                                                            ColorFloat? _clrDefect      = null)
+                                                            string strFilePrefix = "Sdf_",
+                                                            bool bOnlyDefective = false,
+                                                            ColorFloat? _clrBackground = null,
+                                                            ColorFloat? _clrSurface = null,
+                                                            ColorFloat? _clrInside = null,
+                                                            ColorFloat? _clrOutside = null,
+                                                            ColorFloat? _clrDefect = null)
         {
             bool bContainsDefects = false;
 
-            oField.GetVoxelDimensions(  out int nXOrigin,
+            oField.GetVoxelDimensions(out int nXOrigin,
                                         out int nYOrigin,
                                         out int nZOrigin,
                                         out int nXSize,
@@ -234,7 +234,7 @@ namespace Yurik
                 string strFile = Path.Combine(strPath, strFilePrefix);
                 strFile += nSlice.ToString("D5") + ".tga";
 
-                ImageColor img = imgEncodeFromSdf(  oField,
+                ImageColor img = imgEncodeFromSdf(oField,
                                                     fBackgroundValue,
                                                     nSlice,
                                                     _clrBackground,
@@ -271,20 +271,20 @@ namespace Yurik
 
         public void InformActiveValue(in Vector3 vecPosition, float fValue)
         {
-            m_nCount++;    
+            m_nCount++;
         }
 
-        int         m_nCount = 0;
+        int m_nCount = 0;
         ScalarField m_oField;
     }
 
     public class SurfaceNormalFieldExtractor : ITraverseScalarField
     {
-        public static VectorField oExtract( Voxels vox,
-                                            float fSurfaceThresholdVx         = 0.5f,
-                                            Vector3? vecDirectionFilter       = null,
-                                            float fDirectionFilterTolerance   = 0f,
-                                            Vector3? vecScaleBy               = null)
+        public static VectorField oExtract(Voxels vox,
+                                            float fSurfaceThresholdVx = 0.5f,
+                                            Vector3? vecDirectionFilter = null,
+                                            float fDirectionFilterTolerance = 0f,
+                                            Vector3? vecScaleBy = null)
         {
             VectorField oField = new();
 
@@ -292,7 +292,7 @@ namespace Yurik
             Debug.Assert(fDirectionFilterTolerance <= 1f);
 
             SurfaceNormalFieldExtractor oExtractor
-                = new(  vox,
+                = new(vox,
                         oField,
                         fSurfaceThresholdVx,
                         vecDirectionFilter ?? Vector3.Zero,
@@ -304,20 +304,20 @@ namespace Yurik
             return oField;
         }
 
-        protected SurfaceNormalFieldExtractor(  Voxels voxSource,
+        protected SurfaceNormalFieldExtractor(Voxels voxSource,
                                                 VectorField oDestination,
                                                 float fSurfaceThresholdVx,
                                                 Vector3 vecDirFilter,
                                                 float fDirTolerance,
                                                 Vector3 vecScaleBy)
         {
-            m_voxSource     = voxSource;
-            m_oSource       = new(voxSource);
-            m_oDestination  = oDestination;
-            m_fThreshold    = fSurfaceThresholdVx;
-            m_vecDirFilter  = vecDirFilter;
+            m_voxSource = voxSource;
+            m_oSource = new(voxSource);
+            m_oDestination = oDestination;
+            m_fThreshold = fSurfaceThresholdVx;
+            m_vecDirFilter = vecDirFilter;
             m_fDirTolerance = fDirTolerance;
-            m_vecScaleBy    = vecScaleBy;
+            m_vecScaleBy = vecScaleBy;
 
             if (m_vecDirFilter != Vector3.Zero)
                 m_vecDirFilter = Vector3.Normalize(vecDirFilter);
@@ -341,32 +341,32 @@ namespace Yurik
                     return;
             }
 
-            m_oDestination.SetValue(vecPosition, vecNormal * m_vecScaleBy);  
+            m_oDestination.SetValue(vecPosition, vecNormal * m_vecScaleBy);
         }
 
-        float           m_fThreshold;
-        Voxels          m_voxSource;
-        Vector3         m_vecDirFilter;
-        float           m_fDirTolerance;
-        Vector3         m_vecScaleBy;
-        ScalarField     m_oSource;
-        VectorField     m_oDestination;
+        float m_fThreshold;
+        Voxels m_voxSource;
+        Vector3 m_vecDirFilter;
+        float m_fDirTolerance;
+        Vector3 m_vecScaleBy;
+        ScalarField m_oSource;
+        VectorField m_oDestination;
     }
 
     public class VectorFieldMerge : ITraverseVectorField
     {
-        public static void Merge(   VectorField oSource,
+        public static void Merge(VectorField oSource,
                                     VectorField oTarget)
         {
             VectorFieldMerge oMerge = new(oSource, oTarget);
             oMerge.Run();
         }
 
-        protected VectorFieldMerge( VectorField oSource,
+        protected VectorFieldMerge(VectorField oSource,
                                     VectorField oTarget)
         {
-            m_oSource   = oSource;
-            m_oTarget   = oTarget;
+            m_oSource = oSource;
+            m_oTarget = oTarget;
         }
 
         protected void Run()
@@ -385,15 +385,15 @@ namespace Yurik
 
     public class AddVectorFieldToViewer : ITraverseVectorField
     {
-        public static void AddToViewer( Viewer      oViewer,
+        public static void AddToViewer(Viewer oViewer,
                                         VectorField oField,
-                                        ColorFloat  clr,
-                                        int         nStep   = 10,
-                                        float       fArrow  = 1f,
-                                        int         nGroup  = 0)
+                                        ColorFloat clr,
+                                        int nStep = 10,
+                                        float fArrow = 1f,
+                                        int nGroup = 0)
         {
             Debug.Assert(nStep > 0);
-            AddVectorFieldToViewer oAdder = new(    oViewer,
+            AddVectorFieldToViewer oAdder = new(oViewer,
                                                     oField,
                                                     clr,
                                                     nStep,
@@ -403,19 +403,19 @@ namespace Yurik
             oAdder.Run();
         }
 
-        protected AddVectorFieldToViewer(  Viewer       oViewer,
-                                           VectorField  oField,
-                                           ColorFloat   clr,
-                                           int          nStep,
-                                           float        fArrow,
-                                           int          nGroup)
+        protected AddVectorFieldToViewer(Viewer oViewer,
+                                           VectorField oField,
+                                           ColorFloat clr,
+                                           int nStep,
+                                           float fArrow,
+                                           int nGroup)
         {
-            m_oViewer   = oViewer;
-            m_oField    = oField;
-            m_clr       = clr;
-            m_nStep     = nStep;
-            m_fArrow    = fArrow;
-            m_nGroup    = nGroup;
+            m_oViewer = oViewer;
+            m_oField = oField;
+            m_clr = clr;
+            m_nStep = nStep;
+            m_fArrow = fArrow;
+            m_nGroup = nGroup;
         }
 
         protected void Run()
@@ -429,7 +429,7 @@ namespace Yurik
             if (m_nCount < m_nStep)
                 return;
 
-            m_nCount=0;
+            m_nCount = 0;
 
             PolyLine poly = new(m_clr);
 
@@ -444,17 +444,17 @@ namespace Yurik
                 poly.nAddVertex(vecPosition + vecValue);
                 poly.AddArrow(m_fArrow);
             }
-           
+
             m_oViewer.Add(poly, m_nGroup);
         }
 
-        Viewer      m_oViewer;
+        Viewer m_oViewer;
         VectorField m_oField;
-        int         m_nStep;
-        float       m_fArrow;
-        ColorFloat  m_clr;
-        int         m_nGroup;
-        int         m_nCount = 0;
+        int m_nStep;
+        float m_fArrow;
+        ColorFloat m_clr;
+        int m_nGroup;
+        int m_nCount = 0;
     }
 
 }

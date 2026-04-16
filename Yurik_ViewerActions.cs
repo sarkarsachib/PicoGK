@@ -48,7 +48,7 @@ namespace Yurik
 
         class SetGroupVisibleAction : IViewerAction
         {
-            public SetGroupVisibleAction(   int nGroupID,
+            public SetGroupVisibleAction(int nGroupID,
                                             bool bVisible)
             {
                 m_nGroupID = nGroupID;
@@ -57,7 +57,7 @@ namespace Yurik
 
             public void Do(Viewer oViewer)
             {
-                _SetGroupVisible(   oViewer.m_hThis,
+                _SetGroupVisible(oViewer.m_hThis,
                                     m_nGroupID,
                                     m_bVisible);
             }
@@ -68,16 +68,16 @@ namespace Yurik
 
         class SetGroupStaticAction : IViewerAction
         {
-            public SetGroupStaticAction(    int nGroupID,
+            public SetGroupStaticAction(int nGroupID,
                                             bool bStatic)
             {
-                m_nGroupID  = nGroupID;
-                m_bStatic   = bStatic;
+                m_nGroupID = nGroupID;
+                m_bStatic = bStatic;
             }
 
             public void Do(Viewer oViewer)
             {
-                _SetGroupStatic(    oViewer.m_hThis,
+                _SetGroupStatic(oViewer.m_hThis,
                                     m_nGroupID,
                                     m_bStatic);
             }
@@ -88,10 +88,10 @@ namespace Yurik
 
         class SetGroupMaterialAction : IViewerAction
         {
-            public SetGroupMaterialAction(  int         nGroupID,
-                                            ColorFloat  clr,
-                                            float       fMetallic,
-                                            float       fRoughness)
+            public SetGroupMaterialAction(int nGroupID,
+                                            ColorFloat clr,
+                                            float fMetallic,
+                                            float fRoughness)
             {
                 m_nGroupID = nGroupID;
                 m_clr = clr;
@@ -101,22 +101,22 @@ namespace Yurik
 
             public void Do(Viewer oViewer)
             {
-                _SetGroupMaterial(  oViewer.m_hThis,
+                _SetGroupMaterial(oViewer.m_hThis,
                                     m_nGroupID,
                                     m_clr,
                                     m_fMetallic,
                                     m_fRoughness);
             }
 
-            int         m_nGroupID;
-            ColorFloat  m_clr;
-            float       m_fMetallic;
-            float       m_fRoughness;
+            int m_nGroupID;
+            ColorFloat m_clr;
+            float m_fMetallic;
+            float m_fRoughness;
         }
 
         class SetGroupMatrixAction : IViewerAction
         {
-            public SetGroupMatrixAction(    int nGroupID,
+            public SetGroupMatrixAction(int nGroupID,
                                             Matrix4x4 mat)
             {
                 m_nGroupID = nGroupID;
@@ -125,20 +125,20 @@ namespace Yurik
 
             public void Do(Viewer oViewer)
             {
-                _SetGroupMatrix(    oViewer.m_hThis,
+                _SetGroupMatrix(oViewer.m_hThis,
                                     m_nGroupID,
                                     m_mat);
             }
 
-            int         m_nGroupID;
-            Matrix4x4   m_mat;
+            int m_nGroupID;
+            Matrix4x4 m_mat;
         }
 
         class RequestUpdateAction : IViewerAction
         {
             public RequestUpdateAction()
             {
-                
+
             }
 
             public void Do(Viewer oViewer)
@@ -156,17 +156,17 @@ namespace Yurik
 
             public void Do(Viewer oViewer)
             {
-                _RequestScreenShot( oViewer.m_hThis,
+                _RequestScreenShot(oViewer.m_hThis,
                                     m_strScreenShotPath);
             }
 
             string m_strScreenShotPath;
         }
 
-        
+
         class AddVoxelsAction : IViewerAction
         {
-            public AddVoxelsAction( Voxels vox,
+            public AddVoxelsAction(Voxels vox,
                                     int nGroupID)
             {
                 m_vox = vox;
@@ -184,7 +184,7 @@ namespace Yurik
 
                 oViewer.DoAdd(msh, m_nGroupID);
             }
-         
+
             Voxels m_vox;
             int m_nGroupID;
         }
@@ -219,7 +219,7 @@ namespace Yurik
 
         class AddMeshAction : IViewerAction
         {
-            public AddMeshAction(   Mesh msh,
+            public AddMeshAction(Mesh msh,
                                     int nGroupID)
             {
                 m_msh = msh;
@@ -286,7 +286,7 @@ namespace Yurik
 
             public void Do(Viewer oViewer)
             {
-                _RemovePolyLine(    oViewer.m_hThis,
+                _RemovePolyLine(oViewer.m_hThis,
                                     m_poly.m_hThis);
             }
 
@@ -355,8 +355,8 @@ namespace Yurik
                 if (fTriangles > 1000f)
                 {
                     strUnit = "K";
-                    fTriangles  /= 1000.0f;
-                    fVertices   /= 1000.0f;
+                    fTriangles /= 1000.0f;
+                    fVertices /= 1000.0f;
 
                     if (fTriangles > 1000f)
                     {
@@ -382,18 +382,18 @@ namespace Yurik
 
         class LoadLightSetupAction : IViewerAction
         {
-            public LoadLightSetupAction(    LogFile oLog,
-                                            byte [] abyDiffuseDds,
-                                            byte [] abySpecularDds)
+            public LoadLightSetupAction(LogFile oLog,
+                                            byte[] abyDiffuseDds,
+                                            byte[] abySpecularDds)
             {
-                m_oLog              = oLog;
-                m_abyDiffuseDds     = abyDiffuseDds;
-                m_abySpecularDds    = abySpecularDds;
+                m_oLog = oLog;
+                m_abyDiffuseDds = abyDiffuseDds;
+                m_abySpecularDds = abySpecularDds;
             }
 
             public void Do(Viewer oViewer)
             {
-                if (!_bLoadLightSetup(  oViewer.m_hThis,
+                if (!_bLoadLightSetup(oViewer.m_hThis,
                                         m_abyDiffuseDds,
                                         m_abyDiffuseDds.Length,
                                         m_abySpecularDds,
@@ -404,8 +404,8 @@ namespace Yurik
             }
 
             LogFile m_oLog;
-            byte [] m_abyDiffuseDds;
-            byte [] m_abySpecularDds;
+            byte[] m_abyDiffuseDds;
+            byte[] m_abySpecularDds;
         }
 
         public class RotateToNextRoundAngleAction : IViewerAction
@@ -427,7 +427,7 @@ namespace Yurik
             {
                 oViewer.RemoveAllAnimations();
 
-                Vector2 vecTo = new Vector2(    oViewer.m_fOrbit,
+                Vector2 vecTo = new Vector2(oViewer.m_fOrbit,
                                                 oViewer.m_fElevation);
 
                 switch (m_eDir)
@@ -453,13 +453,13 @@ namespace Yurik
                 }
 
                 Animation.IAction xAction
-                    = new AnimViewRotate(   oViewer,
-                                            new Vector2(    oViewer.m_fOrbit,
+                    = new AnimViewRotate(oViewer,
+                                            new Vector2(oViewer.m_fOrbit,
                                                             oViewer.m_fElevation),
                                             vecTo);
 
                 Animation oAnim
-                    = new Animation(    xAction, 0.7f,
+                    = new Animation(xAction, 0.7f,
                                         Animation.EType.Once,
                                         Easing.EEasing.CUBIC_OUT);
 
@@ -470,4 +470,3 @@ namespace Yurik
         }
     }
 }
-    

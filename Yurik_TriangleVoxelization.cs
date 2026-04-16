@@ -44,7 +44,7 @@ namespace Yurik
             return new Voxels(new ImplicitMesh(this, fThickness));
 
             /// TODO enable when multithreaded Yurik is released
-            
+
             /*Voxels [] avox = new Voxels[nTriangleCount()];
 
             Parallel.For(0, nTriangleCount(), n =>
@@ -72,18 +72,18 @@ namespace Yurik
         public ImplicitMesh(Mesh msh, float fThickness)
         {
             m_aTriangles = new ImplicitTriangle[msh.nTriangleCount()];
-            
-            for (int n=0; n<msh.nTriangleCount(); n++)
+
+            for (int n = 0; n < msh.nTriangleCount(); n++)
             {
                 msh.GetTriangle(n, out Vector3 A, out Vector3 B, out Vector3 C);
-                m_aTriangles[n] = new(A,B,C,fThickness);
+                m_aTriangles[n] = new(A, B, C, fThickness);
                 m_oBBox.Include(m_aTriangles[n].oBounds);
             }
         }
 
         public float fSignedDistance(in Vector3 vec)
         {
-            float [] afDist = new float[m_aTriangles.Count()];
+            float[] afDist = new float[m_aTriangles.Count()];
 
             Vector3 vecPt = vec;
 
@@ -94,7 +94,7 @@ namespace Yurik
 
             float fDist = float.MaxValue;
 
-            for (int n=0; n<m_aTriangles.Count(); n++)
+            for (int n = 0; n < m_aTriangles.Count(); n++)
             {
                 fDist = float.Min(fDist, afDist[n]);
             }
@@ -102,7 +102,7 @@ namespace Yurik
             return fDist;
         }
 
-        ImplicitTriangle [] m_aTriangles;
+        ImplicitTriangle[] m_aTriangles;
 
         public BBox3 oBounds => m_oBBox;
 
@@ -114,8 +114,8 @@ namespace Yurik
     /// </summary>
     public class ImplicitTriangle : IBoundedImplicit
     {
-        public ImplicitTriangle(    Vector3 vecA, 
-                                    Vector3 vecB, 
+        public ImplicitTriangle(Vector3 vecA,
+                                    Vector3 vecB,
                                     Vector3 vecC,
                                     float fThickness)
         {
@@ -133,7 +133,7 @@ namespace Yurik
         {
             Vector3 vecClosestPoint = vecClosestPointOnTriangle2(vecPoint, A, B, C);
             float f = Vector3.Distance(vecPoint, vecClosestPoint);
-            return f-m_fThickness;
+            return f - m_fThickness;
         }
 
         private Vector3 vecClosestPointOnTriangle2(Vector3 point, Vector3 a, Vector3 b, Vector3 c)
@@ -189,12 +189,12 @@ namespace Yurik
             float vAB = vb * denom;
             float vAC = vc * denom;
             return a + vAB * ab + vAC * ac;
-        }   
+        }
 
         readonly Vector3 A;
         readonly Vector3 B;
         readonly Vector3 C;
-        readonly float   m_fThickness;
+        readonly float m_fThickness;
 
         public BBox3 oBounds => m_oBBox;
 

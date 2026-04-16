@@ -40,7 +40,7 @@ namespace Yurik
 {
     public class TgaIo
     {
-        public static void SaveTga( string strFilename,
+        public static void SaveTga(string strFilename,
                                     in Image img)
         {
             using (var oFile = File.Open(strFilename, FileMode.Create))
@@ -52,7 +52,7 @@ namespace Yurik
             }
         }
 
-        public static void SaveTga( in BinaryWriter oWriter,
+        public static void SaveTga(in BinaryWriter oWriter,
                                     in Image img)
         {
             if (img.nWidth > ushort.MaxValue)
@@ -68,7 +68,7 @@ namespace Yurik
 
             bool bColor;
 
-            if (    (img.eType == Image.EType.BW) ||
+            if ((img.eType == Image.EType.BW) ||
                     (img.eType == Image.EType.GRAY))
             {
                 bColor = false;
@@ -109,7 +109,7 @@ namespace Yurik
             }
         }
 
-        public static void GetFileInfo( string strFilename,
+        public static void GetFileInfo(string strFilename,
                                         out Image.EType eType,
                                         out int nWidth,
                                         out int nHeight)
@@ -119,7 +119,7 @@ namespace Yurik
             {
                 using (var oReader = new BinaryReader(oFile))
                 {
-                    GetFileInfo(    in oReader,
+                    GetFileInfo(in oReader,
                                     out eType,
                                     out nWidth,
                                     out nHeight);
@@ -127,7 +127,7 @@ namespace Yurik
             }
         }
 
-        public static void GetFileInfo( in BinaryReader oReader,
+        public static void GetFileInfo(in BinaryReader oReader,
                                         out Image.EType eType,
                                         out int nWidth,
                                         out int nHeight)
@@ -152,7 +152,7 @@ namespace Yurik
             }
         }
 
-        public static void LoadTga( string strFilename,
+        public static void LoadTga(string strFilename,
                                     out Image img)
         {
             using (var oFile = File.Open(strFilename, FileMode.Open))
@@ -164,7 +164,7 @@ namespace Yurik
             }
         }
 
-        public static void LoadTga( in BinaryReader oReader,
+        public static void LoadTga(in BinaryReader oReader,
                                     out Image img)
         {
             STgaHeader sHeader = new STgaHeader(0, 0);
@@ -227,20 +227,20 @@ namespace Yurik
         [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct STgaHeader
         {
-            byte            byIDLength;
-            byte            byColorMapType;
-            public byte     byImageType;
-            byte            byColorMapSpec1;
-            byte            byColorMapSpec2;
-            byte            byColorMapSpec3;
-            byte            byColorMapSpec4;
-            byte            byColorMapSpec5;
-            ushort          ushXOrigin;
-            ushort          ushYOrigin;
-            public ushort   ushImageWidth;
-            public ushort   ushImageHeight;
-            public byte     byPixelDepth;
-            byte            byImageDesc;
+            byte byIDLength;
+            byte byColorMapType;
+            public byte byImageType;
+            byte byColorMapSpec1;
+            byte byColorMapSpec2;
+            byte byColorMapSpec3;
+            byte byColorMapSpec4;
+            byte byColorMapSpec5;
+            ushort ushXOrigin;
+            ushort ushYOrigin;
+            public ushort ushImageWidth;
+            public ushort ushImageHeight;
+            public byte byPixelDepth;
+            byte byImageDesc;
 
             public bool bYAxisFlipped()
             {
@@ -251,20 +251,20 @@ namespace Yurik
 
             public STgaHeader(ushort ushWidth, ushort ushHeight)
             {
-                byIDLength      = 0;
-                byColorMapType  = 0;
-                byImageType     = 3; // Grayscale
+                byIDLength = 0;
+                byColorMapType = 0;
+                byImageType = 3; // Grayscale
                 byColorMapSpec1 = 0;
                 byColorMapSpec2 = 0;
                 byColorMapSpec3 = 0;
                 byColorMapSpec4 = 0;
                 byColorMapSpec5 = 0;
-                ushXOrigin      = 0;
-                ushYOrigin      = 0;
-                ushImageWidth   = ushWidth;
-                ushImageHeight  = ushHeight;
-                byPixelDepth    = 8; // Grayscale
-                byImageDesc     = 32;
+                ushXOrigin = 0;
+                ushYOrigin = 0;
+                ushImageWidth = ushWidth;
+                ushImageHeight = ushHeight;
+                byPixelDepth = 8; // Grayscale
+                byImageDesc = 32;
             }
         }
     }

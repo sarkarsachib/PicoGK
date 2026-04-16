@@ -63,7 +63,7 @@ namespace Yurik
             if (strHex.StartsWith("#"))
                 strHex = strHex.Substring(1); // Remove the '#' character if present
 
-            if (    (strHex.Length == 2) ||
+            if ((strHex.Length == 2) ||
                     (strHex.Length == 4))
             {
                 // Grayscale "FF" or "FFFF"
@@ -73,7 +73,7 @@ namespace Yurik
 
                 A = (strHex.Length == 2) ? 1.0f : Convert.ToInt32(strHex.Substring(2, 2), 16) / 255f;
             }
-            else if (   (strHex.Length == 6) ||
+            else if ((strHex.Length == 6) ||
                         (strHex.Length == 8))
             {
                 R = Convert.ToInt32(strHex.Substring(0, 2), 16) / 255f;
@@ -102,7 +102,7 @@ namespace Yurik
         /// </summary>
         /// <param name="fGray">Gray value from 0.0 .. 1.0</param>
         /// <param name="fAlpha">Optional Alpha, 0.0 is transparent</param>
-        public ColorFloat(  float fGray,
+        public ColorFloat(float fGray,
                             float fAlpha = 1.0f)
         {
             R = fGray;
@@ -118,7 +118,7 @@ namespace Yurik
         /// <param name="fG">Green value</param>
         /// <param name="fB">Blue value</param>
         /// <param name="fAlpha">Optional Alpha, 1.0 is fully opaque</param>
-        public ColorFloat(  float fR,
+        public ColorFloat(float fR,
                             float fG,
                             float fB,
                             float fAlpha = 1.0f)
@@ -220,7 +220,7 @@ namespace Yurik
             return strAsHexCode();
         }
 
-        public static ColorFloat clrWeighted(   ColorFloat clr1,
+        public static ColorFloat clrWeighted(ColorFloat clr1,
                                                 ColorFloat clr2,
                                                 float fWeight)
         {
@@ -237,7 +237,7 @@ namespace Yurik
             clr1.B *= (1 - fWeight);
             clr1.A *= (1 - fWeight);
 
-            return new ColorFloat(  clr1.R + clr2.R,
+            return new ColorFloat(clr1.R + clr2.R,
                                     clr1.G + clr2.G,
                                     clr1.B + clr2.B,
                                     clr1.A + clr2.A);
@@ -251,7 +251,7 @@ namespace Yurik
         {
             Random oRandom = oRand ?? new Random();
 
-            return new ColorFloat(  oRandom.NextSingle(),
+            return new ColorFloat(oRandom.NextSingle(),
                                     oRandom.NextSingle(),
                                     oRandom.NextSingle());
         }
@@ -260,7 +260,7 @@ namespace Yurik
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct ColorRgb24
     {
-        public ColorRgb24(  byte byR,
+        public ColorRgb24(byte byR,
                             byte byG,
                             byte byB)
         {
@@ -293,7 +293,7 @@ namespace Yurik
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct ColorRgba32
     {
-        public ColorRgba32( byte byR,
+        public ColorRgba32(byte byR,
                             byte byG,
                             byte byB,
                             byte byA = 255)
@@ -330,7 +330,7 @@ namespace Yurik
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct ColorBgr24
     {
-        public ColorBgr24(  byte byB,
+        public ColorBgr24(byte byB,
                             byte byG,
                             byte byR)
         {
@@ -339,7 +339,7 @@ namespace Yurik
             R = byR;
         }
 
-        public ColorBgr24(  ColorFloat clr)
+        public ColorBgr24(ColorFloat clr)
         {
             R = (byte)(clr.R * 255.0f);
             G = (byte)(clr.G * 255.0f);
@@ -363,7 +363,7 @@ namespace Yurik
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
     public struct ColorBgra32
     {
-        public ColorBgra32( byte byB,
+        public ColorBgra32(byte byB,
                             byte byG,
                             byte byR,
                             byte byA = 255)
@@ -374,7 +374,7 @@ namespace Yurik
             A = byA;
         }
 
-        public ColorBgra32( ColorFloat clr)
+        public ColorBgra32(ColorFloat clr)
         {
             R = (byte)(clr.R * 255.0f);
             G = (byte)(clr.G * 255.0f);
@@ -404,7 +404,7 @@ namespace Yurik
         public float S;
         public float V;
 
-        public ColorHSV( float fH,
+        public ColorHSV(float fH,
                          float fS,
                          float fV)
         {
@@ -475,7 +475,7 @@ namespace Yurik
         }
 
         public static implicit operator ColorFloat(ColorHSV clrHSV)
-        {   
+        {
             float h = clrHSV.H;
             float s = clrHSV.S;
             float v = clrHSV.V;

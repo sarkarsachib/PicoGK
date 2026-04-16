@@ -40,7 +40,7 @@ namespace Yurik
 {
     public interface ITraverseVectorField
     {
-        public abstract void InformActiveValue( in Vector3 vecPosition,
+        public abstract void InformActiveValue(in Vector3 vecPosition,
                                                 in Vector3 vecValue);
     }
 
@@ -65,7 +65,7 @@ namespace Yurik
         /// </summary>
         public VectorField()
             : this(_hCreate())
-        {}
+        { }
 
         /// <summary>
         /// Copy constructor, create a duplicate
@@ -74,7 +74,7 @@ namespace Yurik
         /// <param name="oSource">Source to copy from</param>
         public VectorField(in VectorField oSource)
             : this(_hCreateCopy(oSource.m_hThis))
-        {}
+        { }
 
         /// <summary>
         /// Creates a gradient field from an existing voxel field
@@ -82,7 +82,7 @@ namespace Yurik
         /// <param name="oVoxels">Voxels to create gradients from</param>
         public VectorField(Voxels oVoxels)
             : this(_hCreateFromVoxels(oVoxels.m_hThis))
-        {}
+        { }
 
         /// <summary>
         /// Creates a vector field from an existing voxel field
@@ -94,11 +94,11 @@ namespace Yurik
         /// to be used for the definition of "inside" - usually 0.5 is a good
         /// value - the surface is at exactly 0 and a value of
         /// 1.0 means you are 1 voxel outside from the surface.</param>
-        public VectorField( Voxels oVoxels,
+        public VectorField(Voxels oVoxels,
                             Vector3 vecValue,
                             float fSdThreshold = 0.5f)
             : this(_hBuildFromVoxels(oVoxels.m_hThis, vecValue, fSdThreshold))
-        {}
+        { }
 
         /// <summary>
         /// Sets the value at the specified position in mm
@@ -108,7 +108,7 @@ namespace Yurik
         /// </summary>
         /// <param name="vecPosition">Position in mm</param>
         /// <param name="vecValue">Value</param>
-        public void SetValue(   Vector3 vecPosition,
+        public void SetValue(Vector3 vecPosition,
                                 Vector3 vecValue)
         {
             _SetValue(m_hThis, vecPosition, vecValue);
@@ -125,7 +125,7 @@ namespace Yurik
         /// false:  the specified position doesn't contain a value
         /// true:   the specified position contains a value
         /// </returns>
-        public bool bGetValue(  Vector3 vecPosition,
+        public bool bGetValue(Vector3 vecPosition,
                                 out Vector3 vecValue)
         {
             vecValue = Vector3.Zero;

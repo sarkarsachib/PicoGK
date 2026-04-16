@@ -68,7 +68,7 @@ namespace Yurik
         /// <summary>
         /// Access the bounding box of the implicit function
         /// </summary>
-        BBox3 oBounds {get;}
+        BBox3 oBounds { get; }
     }
 
     public partial class Voxels
@@ -92,7 +92,7 @@ namespace Yurik
         /// </summary>
         public Voxels()
             : this(_hCreate())
-        {}
+        { }
 
         /// <summary>
         /// Copy constructor, create a duplicate
@@ -101,7 +101,7 @@ namespace Yurik
         /// <param name="oSource">Source to copy from</param>
         public Voxels(in Voxels voxSource)
             : this(_hCreateCopy(voxSource.m_hThis))
-        {}
+        { }
 
         /// <summary>
         /// Create a duplicate of the current voxel field
@@ -119,14 +119,14 @@ namespace Yurik
         /// <param name="oSource">Source to copy from</param>
         public Voxels(in ScalarField oSource)
             : this(oSource, oSource.oBoundingBox())
-        {}
+        { }
 
         /// <summary>
         /// Creates a new voxel field and renders it using the
         /// implicit function specified
         /// </summary>
         /// <param name="oImplicit">Object producing a signed distance field</param>
-        public Voxels(  in IImplicit xImplicit,
+        public Voxels(in IImplicit xImplicit,
                         in BBox3 oBounds) : this()
         {
             RenderImplicit(xImplicit, oBounds);
@@ -137,7 +137,7 @@ namespace Yurik
         /// bounded implicit function specified
         /// </summary>
         /// <param name="oImplicit">Object producing a signed distance field</param>
-        public Voxels(  in IBoundedImplicit xImplicit) : this()
+        public Voxels(in IBoundedImplicit xImplicit) : this()
         {
             RenderImplicit(xImplicit, xImplicit.oBounds);
         }
@@ -235,7 +235,7 @@ namespace Yurik
         /// <param name="vox1">First field</param>
         /// <param name="vox2">Second field</param>
         /// <returns>Combination of the two fields as new field</returns>
-        public static Voxels voxCombine(    in Voxels vox1, 
+        public static Voxels voxCombine(in Voxels vox1,
                                             in Voxels vox2)
         {
             return vox1.voxBoolAdd(vox2);
@@ -389,7 +389,7 @@ namespace Yurik
         /// </summary>
         /// <param name="fDist1MM">First offset distance in mm</param>
         /// <param name="fDist2MM">Second distance in mm</param>
-        public void DoubleOffset(   float fDist1MM,
+        public void DoubleOffset(float fDist1MM,
                                     float fDist2MM)
             => _DoubleOffset(m_hThis, fDist1MM, fDist2MM);
 
@@ -400,7 +400,7 @@ namespace Yurik
         /// </summary>
         /// <param name="fDistMM"></param>
         /// <returns>Returns the resulting field</returns>
-        public Voxels voxDoubleOffset(  float fDist1MM,
+        public Voxels voxDoubleOffset(float fDist1MM,
                                         float fDist2MM)
         {
             Voxels vox = new(this);
@@ -473,10 +473,10 @@ namespace Yurik
         /// </summary>
         /// <param name="fFirstOffsetMM">Initial offset</param>
         /// <param name="fFinalSurfaceDistInMM">absolute final offset value</param>
-        public void OverOffset( float fFirstOffsetMM, 
+        public void OverOffset(float fFirstOffsetMM,
                                 float fFinalSurfaceDistInMM = 0)
         {
-            DoubleOffset(   fFirstOffsetMM,
+            DoubleOffset(fFirstOffsetMM,
                             -(fFirstOffsetMM - fFinalSurfaceDistInMM));
         }
 
@@ -496,11 +496,11 @@ namespace Yurik
         /// </summary>
         /// <param name="fFirstOffsetMM">Initial offset</param>
         /// <param name="fFinalSurfaceDistInMM">Absolute final offset from initial surface</param>
-        public Voxels voxOverOffset(    float fFirstOffsetMM, 
+        public Voxels voxOverOffset(float fFirstOffsetMM,
                                         float fFinalSurfaceDistInMM = 0)
         {
             Voxels vox = new(this);
-            vox.DoubleOffset(   fFirstOffsetMM,
+            vox.DoubleOffset(fFirstOffsetMM,
                                 -fFirstOffsetMM + fFinalSurfaceDistInMM);
 
             return vox;
@@ -515,7 +515,7 @@ namespace Yurik
         /// <param name="fRoundingMM"></param>
         /// <returns></returns>
         public void Fillet(float fRoundingMM)
-            => OverOffset(fRoundingMM); 
+            => OverOffset(fRoundingMM);
 
         /// <summary>
         /// Creates a fillet-like effect.
@@ -526,7 +526,7 @@ namespace Yurik
         /// <param name="fRoundingMM"></param>
         /// <returns></returns>
         public Voxels voxFillet(float fRoundingMM)
-            => voxOverOffset(fRoundingMM); 
+            => voxOverOffset(fRoundingMM);
 
         /// <summary>
         /// Creates a shell of a voxel field. The wall thickness is
@@ -549,7 +549,7 @@ namespace Yurik
                 // Outside remains the same
                 return voxBoolSubtract(voxOffset(fOffset));
             }
-            
+
             return voxOffset(fOffset).voxBoolSubtract(this);
         }
 
@@ -563,22 +563,22 @@ namespace Yurik
         /// <param name="fPosOffsetMM">Offset to be used to create the outer shell</param>
         /// <param name="fSmoothInnerMM">Optional smoothing parameter that allows you to smoothen the internal void</param>
         /// <returns></returns>
-        public Voxels voxShell( float fNegOffsetMM, 
-                                float fPosOffsetMM, 
+        public Voxels voxShell(float fNegOffsetMM,
+                                float fPosOffsetMM,
                                 float fSmoothInnerMM = 0f)
         {
             if (fNegOffsetMM > fPosOffsetMM)
             {
-                float fTemp     = fNegOffsetMM;
-                fNegOffsetMM    = fPosOffsetMM;
-                fPosOffsetMM    = fTemp;
+                float fTemp = fNegOffsetMM;
+                fNegOffsetMM = fPosOffsetMM;
+                fPosOffsetMM = fTemp;
             }
 
             Voxels voxInner = voxOffset(fNegOffsetMM);
-            
+
             if (fSmoothInnerMM > 0)
                 voxInner.voxTripleOffset(fSmoothInnerMM);
-            
+
             Voxels voxOuter = voxOffset(fPosOffsetMM);
             voxOuter.voxBoolSubtract(voxInner);
 
@@ -628,7 +628,7 @@ namespace Yurik
         /// </summary>
         /// <param name="xImp">Implicit object with signed distance function</param>
         /// <param name="oBounds">Bounding box in which to render the implicit</param>
-        public void RenderImplicit( in IImplicit xImp,
+        public void RenderImplicit(in IImplicit xImp,
                                     in BBox3 oBounds)
             => _RenderImplicit(m_hThis, in oBounds, xImp.fSignedDistance);
 
@@ -674,20 +674,20 @@ namespace Yurik
         /// </summary>
         /// <param name="fStartZMM">Start voxel slice in mm</param>
         /// <param name="fEndZMM">End voxel slice in mm</param>
-        public void ProjectZSlice(  float fStartZMM,
+        public void ProjectZSlice(float fStartZMM,
                                     float fEndZMM)
-            => _ProjectZSlice(  m_hThis, fStartZMM, fEndZMM);
+            => _ProjectZSlice(m_hThis, fStartZMM, fEndZMM);
 
         /// <summary>
         /// Makes a copy of the voxel field and applies
         /// the ProjectZSlice function to the copy.
         /// </summary>
-        public Voxels voxProjectZSlice( float fStartZMM,
+        public Voxels voxProjectZSlice(float fStartZMM,
                                         float fEndZMM)
         {
             Voxels vox = new(this);
             vox.ProjectZSlice(fStartZMM, fEndZMM);
-            return vox;    
+            return vox;
         }
 
         /// <summary>
@@ -707,15 +707,15 @@ namespace Yurik
         /// </summary>
         /// <param name="fVolumeCubicMM">Cubic MMs of volume filled with voxels</param>
         /// <param name="oBBox">The real world bounding box of the voxels</param>
-        public void CalculateProperties(    out float fVolumeCubicMM,
+        public void CalculateProperties(out float fVolumeCubicMM,
                                             out BBox3 oBBox)
         {
-            oBBox           = new();
-            fVolumeCubicMM  = 0f;
+            oBBox = new();
+            fVolumeCubicMM = 0f;
 
-           _CalculateProperties(    m_hThis,
-                                    ref fVolumeCubicMM,
-                                    ref oBBox);
+            _CalculateProperties(m_hThis,
+                                     ref fVolumeCubicMM,
+                                     ref oBBox);
         }
 
         /// <summary>
@@ -725,7 +725,7 @@ namespace Yurik
         public BBox3 oCalculateBoundingBox()
         {
             Mesh msh = new(this);
-            return msh.oBoundingBox();  
+            return msh.oBoundingBox();
         }
 
         /// <summary>
@@ -752,12 +752,12 @@ namespace Yurik
         /// <param name="vecSurfacePoint">Point on the surface of the voxel field which 
         /// is closest to the supplied point.</param>
         /// <returns>True if point is found, false if field is empty</returns>
-        public bool bClosestPointOnSurface( in  Vector3 vecSearch,
+        public bool bClosestPointOnSurface(in Vector3 vecSearch,
                                             out Vector3 vecSurfacePoint)
         {
             vecSurfacePoint = new();
-            return _bClosestPointOnSurface( m_hThis,
-                                            in  vecSearch,
+            return _bClosestPointOnSurface(m_hThis,
+                                            in vecSearch,
                                             ref vecSurfacePoint);
         }
 
@@ -788,14 +788,14 @@ namespace Yurik
         /// <param name="vecDirection">Direction to search in</param>
         /// <param name="vecSurfacePoint">Point on the surface</param>
         /// <returns>True, point found. False, no surface intersection found</returns>
-        public bool bRayCastToSurface(  in  Vector3 vecSearch,
-                                        in  Vector3 vecDirection,
+        public bool bRayCastToSurface(in Vector3 vecSearch,
+                                        in Vector3 vecDirection,
                                         out Vector3 vecSurfacePoint)
         {
-            vecSurfacePoint     = new();
-            return _bRayCastToSurface( m_hThis,
-                                       in  vecSearch,
-                                       in  vecDirection,
+            vecSurfacePoint = new();
+            return _bRayCastToSurface(m_hThis,
+                                       in vecSearch,
+                                       in vecDirection,
                                        ref vecSurfacePoint);
         }
 
@@ -808,11 +808,11 @@ namespace Yurik
         /// <returns>Point on surface/returns>
         /// <exception cref="Exception">Throws an exception of no intersection 
         /// with surface found.</exception>
-        public Vector3 vecRayCastToSurface( in  Vector3 vecSearch,
-                                            in  Vector3 vecDirection)
+        public Vector3 vecRayCastToSurface(in Vector3 vecSearch,
+                                            in Vector3 vecDirection)
         {
-            if (!bRayCastToSurface( in  vecSearch,
-                                    in  vecDirection,
+            if (!bRayCastToSurface(in vecSearch,
+                                    in vecDirection,
                                     out Vector3 vecSurfacePoint))
             {
                 throw new Exception("No intersection with surface in RayCastToSurface");
@@ -830,21 +830,21 @@ namespace Yurik
         /// <param name="nXSize">Size in x direction in voxels</param>
         /// <param name="nYSize">Size in y direction in voxels</param>
         /// <param name="nZSize">Size in z direction in voxels</param>
-        public void GetVoxelDimensions( out int nXOrigin,
+        public void GetVoxelDimensions(out int nXOrigin,
                                         out int nYOrigin,
                                         out int nZOrigin,
                                         out int nXSize,
                                         out int nYSize,
                                         out int nZSize)
         {
-            nXOrigin    = 0;
-            nYOrigin    = 0;
-            nZOrigin    = 0;
-            nXSize      = 0;
-            nYSize      = 0;
-            nZSize      = 0;
+            nXOrigin = 0;
+            nYOrigin = 0;
+            nZOrigin = 0;
+            nXSize = 0;
+            nYSize = 0;
+            nZSize = 0;
 
-            _GetVoxelDimensions(    m_hThis,
+            _GetVoxelDimensions(m_hThis,
                                     ref nXOrigin,
                                     ref nYOrigin,
                                     ref nZOrigin,
@@ -859,18 +859,18 @@ namespace Yurik
         /// <param name="nXSize">Size in x direction in voxels</param>
         /// <param name="nYSize">Size in y direction in voxels</param>
         /// <param name="nZSize">Size in z direction in voxels</param>
-        public void GetVoxelDimensions( out int nXSize,
+        public void GetVoxelDimensions(out int nXSize,
                                         out int nYSize,
                                         out int nZSize)
         {
-            int nXOrigin    = 0; // unused in this function
-            int nYOrigin    = 0; // unused in this function
-            int nZOrigin    = 0; // unused in this function
-            nXSize          = 0;
-            nYSize          = 0;
-            nZSize          = 0;
+            int nXOrigin = 0; // unused in this function
+            int nYOrigin = 0; // unused in this function
+            int nZOrigin = 0; // unused in this function
+            nXSize = 0;
+            nYSize = 0;
+            nZSize = 0;
 
-            _GetVoxelDimensions(    m_hThis,
+            _GetVoxelDimensions(m_hThis,
                                     ref nXOrigin,
                                     ref nYOrigin,
                                     ref nZOrigin,
@@ -879,15 +879,15 @@ namespace Yurik
                                     ref nZSize);
         }
 
-         /// <summary>
+        /// <summary>
         /// Query the real world origin of a voxel slice, which is also
         /// the origin of the actual voxel field in space
         /// </summary>
         /// <param name="nZSlice">Slice you are looking for</param>
         /// <returns>Real world coordinates of the origin of the slice</returns>
-        public Vector3 vecZSliceOrigin(int nZSlice=0)
+        public Vector3 vecZSliceOrigin(int nZSlice = 0)
         {
-            GetVoxelDimensions( out int nXOrigin,
+            GetVoxelDimensions(out int nXOrigin,
                                 out int nYOrigin,
                                 out int nZOrigin,
                                 out _,
@@ -925,7 +925,7 @@ namespace Yurik
         /// </summary>
         /// <param name="nZSlice">Slice to retrieve. 0 is at the bottom.</param>
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
-        public void GetVoxelSlice(  in int nZSlice,
+        public void GetVoxelSlice(in int nZSlice,
                                     ref ImageGrayScale img,
                                     ESliceMode eMode = ESliceMode.SignedDistance)
         {
@@ -943,11 +943,11 @@ namespace Yurik
 
             switch (eMode)
             {
-               case ESliceMode.Antialiased:
+                case ESliceMode.Antialiased:
                     {
-                        for (int x=0; x<img.nWidth; x++)
+                        for (int x = 0; x < img.nWidth; x++)
                         {
-                            for (int y=0; y<img.nHeight; y++)
+                            for (int y = 0; y < img.nHeight; y++)
                             {
                                 float fValue = img.fValue(x, y);
                                 if (fValue <= 0)
@@ -1013,7 +1013,7 @@ namespace Yurik
         /// </summary>
         /// <param name="nZSlice">Slice to retrieve. 0 is at the bottom.</param>
         /// <param name="img">Pre-allocated grayscale image to receive the values</param>
-        public void GetInterpolatedVoxelSlice(  in float fZSlice,
+        public void GetInterpolatedVoxelSlice(in float fZSlice,
                                                 ref ImageGrayScale img,
                                                 ESliceMode eMode = ESliceMode.SignedDistance)
         {
@@ -1031,11 +1031,11 @@ namespace Yurik
 
             switch (eMode)
             {
-               case ESliceMode.Antialiased:
+                case ESliceMode.Antialiased:
                     {
-                        for (int x=0; x<img.nWidth; x++)
+                        for (int x = 0; x < img.nWidth; x++)
                         {
-                            for (int y=0; y<img.nHeight; y++)
+                            for (int y = 0; y < img.nHeight; y++)
                             {
                                 float fValue = img.fValue(x, y);
                                 if (fValue <= 0)

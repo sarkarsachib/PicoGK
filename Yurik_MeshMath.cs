@@ -39,12 +39,12 @@ namespace Yurik
 {
     public partial class Mesh
     {
-        public bool bFindTriangleFromSurfacePoint(  Vector3 vecSurfacePoint,
+        public bool bFindTriangleFromSurfacePoint(Vector3 vecSurfacePoint,
                                                     out int nTriangle)
         {
             for (int n = 0; n < nTriangleCount(); n++)
             {
-                GetTriangle(    n,
+                GetTriangle(n,
                                 out Vector3 vecA,
                                 out Vector3 vecB,
                                 out Vector3 vecC);
@@ -60,7 +60,7 @@ namespace Yurik
             return false;
         }
 
-        static public bool bPointLiesOnTriangle(    Vector3 vecP,
+        static public bool bPointLiesOnTriangle(Vector3 vecP,
                                                     Vector3 vecA,
                                                     Vector3 vecB,
                                                     Vector3 vecC)

@@ -72,7 +72,7 @@ namespace Yurik
         public enum EType
         {
             UNKNOWN = -1,
-            STRING  = 0,
+            STRING = 0,
             FLOAT,
             VECTOR
         };
@@ -103,7 +103,7 @@ namespace Yurik
                 strValueName = "";
                 return false;
             }
-                
+
             strValueName = oBuilder.ToString();
             return true;
         }
@@ -116,13 +116,13 @@ namespace Yurik
         public EType eTypeAt(string strName)
         {
             int iType = _nTypeAt(m_hThis, strName);
-            if (iType > (int) EType.VECTOR)
+            if (iType > (int)EType.VECTOR)
             {
                 Debug.Assert(false, "Invalid metadata type returned by YurikRuntime");
                 return EType.UNKNOWN;
             }
 
-            return (EType) iType;
+            return (EType)iType;
         }
 
         /// <summary>
@@ -166,7 +166,7 @@ namespace Yurik
         /// <param name="strValue">Value returned</param>
         /// <returns>Returns false if value doesn't exist or has the
         /// wrong type</returns>
-        public bool bGetValueAt(    string strFieldName,
+        public bool bGetValueAt(string strFieldName,
                                     out string strValue)
         {
             int nLength = _nStringLengthAt(m_hThis, strFieldName) + 1;
@@ -177,7 +177,7 @@ namespace Yurik
                 strValue = "";
                 return false;
             }
-                
+
             strValue = oBuilder.ToString();
             return true;
         }
@@ -258,7 +258,7 @@ namespace Yurik
         public override string? ToString()
         {
             string str = $"Metadata table with {nCount()} items\n";
-            for (int nMeta=0; nMeta < nCount(); nMeta++)
+            for (int nMeta = 0; nMeta < nCount(); nMeta++)
             {
                 bGetNameAt(nMeta, out string strName);
                 str += $"  {strName} ({strTypeAt(strName)}): ";
@@ -285,7 +285,7 @@ namespace Yurik
 
             return str;
         }
-    
+
         /// <summary>
         /// Internal constructor used by the Voxels, ScalarField and VectorField
         /// accessor function. Do not construct FieldMetadata objects by
@@ -348,8 +348,8 @@ namespace Yurik
             if (strFieldName.StartsWith("Yurik.", StringComparison.InvariantCultureIgnoreCase))
                 throw new FieldAccessException($"Fields starting with 'Yurik.' are internal - do not set them from your code ('{strFieldName}').");
 
-            if (    strFieldName.Equals("class",   StringComparison.InvariantCultureIgnoreCase) ||
-                    strFieldName.Equals("name",    StringComparison.InvariantCultureIgnoreCase))
+            if (strFieldName.Equals("class", StringComparison.InvariantCultureIgnoreCase) ||
+                    strFieldName.Equals("name", StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new FieldAccessException($"Do not set openvdb-internal fields from your code ('{strFieldName}')");
             }
@@ -357,7 +357,7 @@ namespace Yurik
             if (strFieldName.StartsWith("file_", StringComparison.InvariantCultureIgnoreCase))
             {
                 throw new FieldAccessException($"Field names starting with file_ are openvdb-internal - do not set from your code ('{strFieldName}')");
-            }   
+            }
         }
     }
 }

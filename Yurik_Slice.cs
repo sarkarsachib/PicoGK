@@ -84,12 +84,12 @@ namespace Yurik
             return EWinding.UNKNOWN; // Degenerate case
         }
 
-        public PolyContour(     IEnumerable<Vector2> oVertices,
+        public PolyContour(IEnumerable<Vector2> oVertices,
                                 EWinding eWinding = EWinding.UNKNOWN)
         {
             m_oVertices = new();
-            m_oBBox     = new();
-            int nCount  = 0;
+            m_oBBox = new();
+            int nCount = 0;
 
             foreach (Vector2 vec in oVertices)
             {
@@ -98,7 +98,7 @@ namespace Yurik
                 nCount++;
             }
 
-            Debug.Assert(   nCount > 2,
+            Debug.Assert(nCount > 2,
                             "Polyline with less than 3 points makes no sense");
 
             if (eWinding == EWinding.UNKNOWN)
@@ -108,7 +108,7 @@ namespace Yurik
             else
             {
                 m_eWinding = eWinding;
-                Debug.Assert(   m_eWinding == eDetectWinding(m_oVertices),
+                Debug.Assert(m_eWinding == eDetectWinding(m_oVertices),
                                 "Detected Winding that is not correct");
             }
         }
@@ -123,9 +123,9 @@ namespace Yurik
             m_eWinding = eDetectWinding(m_oVertices);
         }
 
-        public EWinding eWinding()          { return m_eWinding; }
+        public EWinding eWinding() { return m_eWinding; }
 
-        public List<Vector2> oVertices()    { return m_oVertices; }
+        public List<Vector2> oVertices() { return m_oVertices; }
 
         /// <summary>
         /// Makes sure that the last coordinate is identical to the first
@@ -184,13 +184,13 @@ namespace Yurik
             str += " Z";
         }
 
-        List<Vector2>   m_oVertices;
-        EWinding        m_eWinding;
-        BBox2           m_oBBox;
+        List<Vector2> m_oVertices;
+        EWinding m_eWinding;
+        BBox2 m_oBBox;
 
-        public BBox2 oBBox()                => m_oBBox;
-        public int nCount()                 => m_oVertices.Count;
-        public Vector2 vecVertex(int n)     => m_oVertices[n];
+        public BBox2 oBBox() => m_oBBox;
+        public int nCount() => m_oVertices.Count;
+        public Vector2 vecVertex(int n) => m_oVertices[n];
     }
 
     public class PolySlice
@@ -221,7 +221,7 @@ namespace Yurik
             }
         }
 
-        public void SaveToSvgFile(  string strPath,
+        public void SaveToSvgFile(string strPath,
                                     bool bSolid,
                                     BBox2? oBBoxToUse = null)
         {
@@ -290,7 +290,7 @@ namespace Yurik
             }
         }
 
-        public static PolySlice oFromSdf(   Image img,
+        public static PolySlice oFromSdf(Image img,
                                             float fZPos,
                                             Vector2 vecOffset,
                                             float fScale)
@@ -363,9 +363,9 @@ namespace Yurik
 
             int nSegmentsLeft = oSegments.Count;
 
-            int nCurrStart  = -1;
-            int nCurrEnd    = -1;
-            int nUnused     = 0;
+            int nCurrStart = -1;
+            int nCurrEnd = -1;
+            int nUnused = 0;
 
             LinkedList<Vector2> oNewContour = new();
 
@@ -384,8 +384,8 @@ namespace Yurik
 
                     Debug.Assert(nCurrStart >= 0);
 
-                    nCurrEnd    = nCurrStart;
-                    nUnused     = nCurrStart + 1;
+                    nCurrEnd = nCurrStart;
+                    nUnused = nCurrStart + 1;
 
                     oNewContour.AddLast(oSegments[nCurrStart].m_vecStart);
                     oNewContour.AddLast(oSegments[nCurrStart].m_vecEnd);
@@ -393,10 +393,10 @@ namespace Yurik
                     nSegmentsLeft--;
                 }
 
-                int nBestStart      = -1;
-                int nBestEnd        = -1;
+                int nBestStart = -1;
+                int nBestEnd = -1;
                 float fBestSqrStart = 1.0f;
-                float fBestSqrEnd   = 1.0f;
+                float fBestSqrEnd = 1.0f;
 
                 if (nCurrEnd != nCurrStart)
                 {
@@ -404,8 +404,8 @@ namespace Yurik
                     if (fSqrDist < 1.0f)
                     {
                         fBestSqrEnd = fBestSqrStart = fSqrDist;
-                        nBestStart  = nCurrEnd;
-                        nBestEnd    = nCurrStart;
+                        nBestStart = nCurrEnd;
+                        nBestEnd = nCurrStart;
                     }
                 }
 
@@ -431,18 +431,18 @@ namespace Yurik
                     float fSqrDist = (oSegments[nCurrStart].m_vecStart - oSegments[n].m_vecEnd).LengthSquared();
                     if (fSqrDist < fBestSqrStart)
                     {
-                        fBestSqrStart   = fSqrDist;
-                        nBestStart      = n;
+                        fBestSqrStart = fSqrDist;
+                        nBestStart = n;
                     }
 
                     fSqrDist = (oSegments[nCurrEnd].m_vecEnd - oSegments[n].m_vecStart).LengthSquared();
                     if (fSqrDist < fBestSqrEnd)
                     {
                         fBestSqrEnd = fSqrDist;
-                        nBestEnd    = n;
-                    }                        
+                        nBestEnd = n;
+                    }
                 }
- 
+
                 if (nBestEnd < 0 && nBestStart < 0)
                 {
                     Debug.Assert(oNewContour.Count() < 3);
@@ -485,15 +485,15 @@ namespace Yurik
             return oSlice;
         }
 
-        public float fZPos()                    => m_fZPos;
-        public BBox2 oBBox()                    => m_oBBox;
-        public int nContours()                 => m_oContours.Count;
-        public PolyContour oContourAt(int i)   => m_oContours[i];
+        public float fZPos() => m_fZPos;
+        public BBox2 oBBox() => m_oBBox;
+        public int nContours() => m_oContours.Count;
+        public PolyContour oContourAt(int i) => m_oContours[i];
 
-        List<PolyContour>   m_oContours;
-        float               m_fZPos;
-        BBox2               m_oBBox;
-        
+        List<PolyContour> m_oContours;
+        float m_fZPos;
+        BBox2 m_oBBox;
+
         static readonly int[,] m_aanEdgeLut =
         {
             { 0,-1, -1, -1, -1},
@@ -513,22 +513,22 @@ namespace Yurik
             { 9, 3,  0, -1, -1},
             { 0,-1, -1, -1, -1}
         };
-        
+
         class CSegment
         {
             public CSegment(Vector2 vecStart, Vector2 vecEnd)
             {
-                m_vecStart  = vecStart;
-                m_vecEnd    = vecEnd;
-                m_fMinY     = Math.Min(vecStart.Y, vecEnd.Y);
-                m_fMaxY     = Math.Max(vecStart.Y, vecEnd.Y);
+                m_vecStart = vecStart;
+                m_vecEnd = vecEnd;
+                m_fMinY = Math.Min(vecStart.Y, vecEnd.Y);
+                m_fMaxY = Math.Max(vecStart.Y, vecEnd.Y);
             }
 
-            public Vector2  m_vecStart;
-            public Vector2  m_vecEnd;
-            public float    m_fMinY;
-            public float    m_fMaxY;
-            public bool     m_bUsed = false;
+            public Vector2 m_vecStart;
+            public Vector2 m_vecEnd;
+            public float m_fMinY;
+            public float m_fMaxY;
+            public bool m_bUsed = false;
         };
 
         static float fZeroCrossing(float fA, float fB)
@@ -542,8 +542,8 @@ namespace Yurik
     {
         public PolySliceStack()
         {
-            m_oSlices   = new();
-            m_oBBox     = new();
+            m_oSlices = new();
+            m_oBBox = new();
         }
 
         public PolySliceStack(List<PolySlice> oSlices) : this()
@@ -560,23 +560,23 @@ namespace Yurik
             }
         }
 
-        public void AddToViewer(    Viewer oViewer,
-                                    ColorFloat? clrOutside      = null,
-                                    ColorFloat? clrInside       = null,
-                                    ColorFloat? clrDegenerate   = null,
+        public void AddToViewer(Viewer oViewer,
+                                    ColorFloat? clrOutside = null,
+                                    ColorFloat? clrInside = null,
+                                    ColorFloat? clrDegenerate = null,
                                     int nGroup = 0)
         {
             if (clrDegenerate is null)
-                clrDegenerate   = "#AAAAAAAA";
+                clrDegenerate = "#AAAAAAAA";
 
             if (clrInside is null)
-                clrInside       = "#AAAAAAAA";
+                clrInside = "#AAAAAAAA";
 
             if (clrOutside is null)
-                clrOutside      = "#FF0000AA";
+                clrOutside = "#FF0000AA";
 
             foreach (PolySlice oSlice in m_oSlices)
-            {  
+            {
                 for (int n = 0; n < oSlice.nContours(); n++)
                 {
                     PolyContour oContour = oSlice.oContourAt(n);
@@ -600,11 +600,11 @@ namespace Yurik
             }
         }
 
-        public int nCount()                 => m_oSlices.Count();
-        public PolySlice oSliceAt(int n)    => m_oSlices[n];
-        public BBox3 oBBox()                => m_oBBox;
+        public int nCount() => m_oSlices.Count();
+        public PolySlice oSliceAt(int n) => m_oSlices[n];
+        public BBox3 oBBox() => m_oBBox;
 
         List<PolySlice> m_oSlices;
-        BBox3           m_oBBox;
+        BBox3 m_oBBox;
     }
 }

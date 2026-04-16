@@ -48,7 +48,7 @@ namespace Yurik
 
         public interface IKeyHandler
         {
-            bool bHandleEvent(  Viewer oViewer,
+            bool bHandleEvent(Viewer oViewer,
                                 EKeys eKey,
                                 bool bPressed,
                                 bool bShift,
@@ -59,8 +59,8 @@ namespace Yurik
 
         public enum EKeys
         {
-            Key_Space       = 32,
-            Key_0           = 48,
+            Key_Space = 32,
+            Key_0 = 48,
             Key_1,
             Key_2,
             Key_3,
@@ -70,7 +70,7 @@ namespace Yurik
             Key_7,
             Key_8,
             Key_9,
-            Key_A           = 65,
+            Key_A = 65,
             Key_B,
             Key_C,
             Key_D,
@@ -95,8 +95,8 @@ namespace Yurik
             Key_W,
             Key_X,
             Key_Y,
-            Key_Z           = 90,
-            Key_ESC         = 256,
+            Key_Z = 90,
+            Key_ESC = 256,
             Key_Enter,
             Key_Tab,
             Key_Backspace,
@@ -109,8 +109,8 @@ namespace Yurik
             Key_PgUp,
             Key_PgDn,
             Key_Home,
-            Key_End         = 269,
-            Key_F1          = 290,
+            Key_End = 269,
+            Key_F1 = 290,
             Key_F2,
             Key_F3,
             Key_F4,
@@ -126,7 +126,7 @@ namespace Yurik
 
         public class KeyAction
         {
-            public KeyAction(   IViewerAction xAction,
+            public KeyAction(IViewerAction xAction,
                                 EKeys eKey,
                                 bool bPressed = false, // Handle on release by default
                                 bool bShift = false,
@@ -143,19 +143,19 @@ namespace Yurik
                 m_bCmd = bCmd;
             }
 
-            public bool bKeyEquals( EKeys   eKey,
-                                    bool    bPressed,
-                                    bool    bShift,
-                                    bool    bCtrl,
-                                    bool    bAlt,
-                                    bool    bCmd)
+            public bool bKeyEquals(EKeys eKey,
+                                    bool bPressed,
+                                    bool bShift,
+                                    bool bCtrl,
+                                    bool bAlt,
+                                    bool bCmd)
             {
-                return (    (m_eKey     == eKey)        &&
-                            (m_bPressed == bPressed)    &&
-                            (m_bShift   == bShift)      &&
-                            (m_bCtrl    == bCtrl)       &&
-                            (m_bAlt     == bAlt)        &&
-                            (m_bCmd     == bCmd));
+                return ((m_eKey == eKey) &&
+                            (m_bPressed == bPressed) &&
+                            (m_bShift == bShift) &&
+                            (m_bCtrl == bCtrl) &&
+                            (m_bAlt == bAlt) &&
+                            (m_bCmd == bCmd));
             }
 
             public void Do(Viewer oViewer)
@@ -163,13 +163,13 @@ namespace Yurik
                 m_xAction.Do(oViewer);
             }
 
-            IViewerAction   m_xAction;
-            EKeys           m_eKey;
-            bool            m_bPressed;
-            bool            m_bShift;
-            bool            m_bCtrl;
-            bool            m_bAlt;
-            bool            m_bCmd;
+            IViewerAction m_xAction;
+            EKeys m_eKey;
+            bool m_bPressed;
+            bool m_bShift;
+            bool m_bCtrl;
+            bool m_bAlt;
+            bool m_bCmd;
         }
 
         public class KeyHandler : IKeyHandler
@@ -181,17 +181,17 @@ namespace Yurik
 
             LinkedList<KeyAction> m_oKeyActions = new();
 
-            public bool bHandleEvent(   Viewer  oViewer,
-                                        EKeys   eKey,
-                                        bool    bPressed,
-                                        bool    bShift,
-                                        bool    bCtrl,
-                                        bool    bAlt,
-                                        bool    bCmd)
+            public bool bHandleEvent(Viewer oViewer,
+                                        EKeys eKey,
+                                        bool bPressed,
+                                        bool bShift,
+                                        bool bCtrl,
+                                        bool bAlt,
+                                        bool bCmd)
             {
                 foreach (KeyAction oAction in m_oKeyActions)
                 {
-                    if (oAction.bKeyEquals(     eKey,
+                    if (oAction.bKeyEquals(eKey,
                                                 bPressed,
                                                 bShift,
                                                 bCtrl,
@@ -208,4 +208,3 @@ namespace Yurik
         }
     }
 }
-    

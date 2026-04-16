@@ -65,13 +65,13 @@ namespace Yurik
         /// <param name="vecScale">Scale the mesh (first step)</param>
         /// <param name="vecOffset">Offset the mesh (second step)</param>
         /// <returns>A new mesh that has the transformation applied</returns>
-        public Mesh mshCreateTransformed(   Vector3 vecScale,
+        public Mesh mshCreateTransformed(Vector3 vecScale,
                                             Vector3 vecOffset)
         {
             Mesh mshTrans = new Mesh();
             for (int n = 0; n < nTriangleCount(); n++)
             {
-                GetTriangle(    n,
+                GetTriangle(n,
                                 out Vector3 A,
                                 out Vector3 B,
                                 out Vector3 C);
@@ -100,14 +100,14 @@ namespace Yurik
             Mesh mshTrans = new Mesh();
             for (int n = 0; n < nTriangleCount(); n++)
             {
-                GetTriangle(    n,
+                GetTriangle(n,
                                 out Vector3 A,
                                 out Vector3 B,
                                 out Vector3 C);
 
-               mshTrans.nAddTriangle(   A.vecTransformed(matTrans),
-                                        B.vecTransformed(matTrans),
-                                        C.vecTransformed(matTrans));
+                mshTrans.nAddTriangle(A.vecTransformed(matTrans),
+                                         B.vecTransformed(matTrans),
+                                         C.vecTransformed(matTrans));
             }
 
             return mshTrans;
@@ -120,24 +120,24 @@ namespace Yurik
         /// <param name="vecPlanePoint">A point through which the mirror plane passes.</param>
         /// <param name="vecPlaneNormal">The normal vector of the mirror plane.</param>
         /// <returns>The mirrored mesh.</returns>
-        public Mesh mshCreateMirrored(  Vector3 vecPlanePoint,
-									    Vector3 vecPlaneNormal)
-		{
-			Mesh mshResult = new();
+        public Mesh mshCreateMirrored(Vector3 vecPlanePoint,
+                                        Vector3 vecPlaneNormal)
+        {
+            Mesh mshResult = new();
 
             vecPlaneNormal = vecPlaneNormal.vecNormalized();
 
-			for (int n=0; n<nTriangleCount();n++)
-			{
-				GetTriangle(n, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC);
+            for (int n = 0; n < nTriangleCount(); n++)
+            {
+                GetTriangle(n, out Vector3 vecA, out Vector3 vecB, out Vector3 vecC);
 
-				mshResult.nAddTriangle(	vecA.vecMirrored(vecPlanePoint, vecPlaneNormal),
-										vecB.vecMirrored(vecPlanePoint, vecPlaneNormal),
-										vecC.vecMirrored(vecPlanePoint, vecPlaneNormal));
-			}
+                mshResult.nAddTriangle(vecA.vecMirrored(vecPlanePoint, vecPlaneNormal),
+                                        vecB.vecMirrored(vecPlanePoint, vecPlaneNormal),
+                                        vecC.vecMirrored(vecPlanePoint, vecPlaneNormal));
+            }
 
-			return mshResult;
-		}
+            return mshResult;
+        }
 
         /// <summary>
         /// Add a new vertex to the mesh so that it can be used in mesh triangles
@@ -149,13 +149,13 @@ namespace Yurik
             return _nAddVertex(m_hThis, vec);
         }
 
-        public void AddVertices(    in  IEnumerable<Vector3> avecVertices,
+        public void AddVertices(in IEnumerable<Vector3> avecVertices,
                                     out int[] anVertexIndex)
         {
             int nVertexCount = avecVertices.Count();
             anVertexIndex = new int[nVertexCount];
-            
-            int n=0;
+
+            int n = 0;
             foreach (Vector3 vec in avecVertices)
             {
                 anVertexIndex[n] = nAddVertex(vec);
@@ -169,7 +169,7 @@ namespace Yurik
         /// <param name="nVertex">The vertex index</param>
         public Vector3 vecVertexAt(int nVertex)
         {
-            Vector3 vec = new ();
+            Vector3 vec = new();
             _GetVertex(m_hThis, nVertex, ref vec);
             return vec;
         }
@@ -223,7 +223,7 @@ namespace Yurik
         /// <param name="vecB">Second vertex of the triangle</param>
         /// <param name="vecC">Third vertex of the triangle</param>
         /// <returns>The triangle index of the added triangle in the mesh</returns>
-        public int nAddTriangle(    in Vector3 vecA,
+        public int nAddTriangle(in Vector3 vecA,
                                     in Vector3 vecB,
                                     in Vector3 vecC)
         {
@@ -238,7 +238,7 @@ namespace Yurik
         /// Helper function, which calls nAddTriangle in
         /// the background.
         /// </summary>
-        public void AddQuad(    int n0,
+        public void AddQuad(int n0,
                                 int n1,
                                 int n2,
                                 int n3,
@@ -261,7 +261,7 @@ namespace Yurik
         /// Helper function, which calls nAddTriangle in
         /// the background.
         /// </summary>
-        public void AddQuad(    in Vector3 vec0,
+        public void AddQuad(in Vector3 vec0,
                                 in Vector3 vec1,
                                 in Vector3 vec2,
                                 in Vector3 vec3,
@@ -272,7 +272,7 @@ namespace Yurik
             int n2 = nAddVertex(vec2);
             int n3 = nAddVertex(vec3);
 
-            AddQuad(n0,n1,n2,n3, bFlipped);
+            AddQuad(n0, n1, n2, n3, bFlipped);
         }
 
         /// <summary>
@@ -282,7 +282,7 @@ namespace Yurik
         public Triangle oTriangleAt(int nTriangle)
         {
             Triangle t = new();
-            _GetTriangle(   m_hThis,
+            _GetTriangle(m_hThis,
                             nTriangle,
                             ref t);
 
@@ -296,7 +296,7 @@ namespace Yurik
         /// <param name="vecA">First vertex in the triangle</param>
         /// <param name="vecB">Second vertex in the triangle</param>
         /// <param name="vecC">Third vertex in the triangle</param>
-        public void GetTriangle(    int nTriangle,
+        public void GetTriangle(int nTriangle,
                                     out Vector3 vecA,
                                     out Vector3 vecB,
                                     out Vector3 vecC)
@@ -305,7 +305,7 @@ namespace Yurik
             vecB = new();
             vecC = new();
 
-            _GetTriangleV(  m_hThis,
+            _GetTriangleV(m_hThis,
                             nTriangle,
                             ref vecA,
                             ref vecB,
@@ -320,9 +320,9 @@ namespace Yurik
         /// </summary>
         public void Append(Mesh msh)
         {
-            for (int n=0; n<msh.nTriangleCount(); n++)
+            for (int n = 0; n < msh.nTriangleCount(); n++)
             {
-                msh.GetTriangle(    n,
+                msh.GetTriangle(n,
                                     out Vector3 vecA,
                                     out Vector3 vecB,
                                     out Vector3 vecC);

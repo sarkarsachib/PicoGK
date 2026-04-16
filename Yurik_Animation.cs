@@ -45,12 +45,12 @@ namespace Yurik
             void Do(float fTime);
         }
 
-        public enum EType   { Once, Repeat, Wiggle };
+        public enum EType { Once, Repeat, Wiggle };
 
-        public Animation(   IAction         xAction,
-                            float           fDurationInSeconds,
-                            EType           eType,
-                            Easing.EEasing  eEasing)
+        public Animation(IAction xAction,
+                            float fDurationInSeconds,
+                            EType eType,
+                            Easing.EEasing eEasing)
         {
             m_xAction = xAction;
             m_fDuration = fDurationInSeconds;
@@ -101,17 +101,17 @@ namespace Yurik
             float fInterpolated = Easing.fEasingFunction(fPos, m_eEasing);
 
             m_xAction.Do(fInterpolated);
-            
+
             return true;
         }
 
         float m_fStartTime = 0.0f;
         bool m_bReverse = false;
 
-        IAction         m_xAction;
-        float           m_fDuration;
-        EType           m_eType;
-        Easing.EEasing  m_eEasing;
+        IAction m_xAction;
+        float m_fDuration;
+        EType m_eType;
+        Easing.EEasing m_eEasing;
     }
 
     public class AnimationQueue
@@ -178,9 +178,9 @@ namespace Yurik
             }
         }
 
-        Stopwatch       m_oWatch            = new Stopwatch();
-        float           m_fLastActionTime   = 0.0f;
-        float           m_fIdleTime         = 5.0f;
-        List<Animation> m_oAnimations       = new List<Animation>();
+        Stopwatch m_oWatch = new Stopwatch();
+        float m_fLastActionTime = 0.0f;
+        float m_fIdleTime = 5.0f;
+        List<Animation> m_oAnimations = new List<Animation>();
     }
 }

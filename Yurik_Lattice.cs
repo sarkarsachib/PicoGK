@@ -46,19 +46,19 @@ namespace Yurik
             Debug.Assert(m_hThis != IntPtr.Zero);
         }
 
-        public void AddSphere(  in Vector3 vecCenter,
+        public void AddSphere(in Vector3 vecCenter,
                                 float fRadius)
         {
             _AddSphere(m_hThis, vecCenter, fRadius);
         }
 
-        public void AddBeam(    in Vector3 vecA,
+        public void AddBeam(in Vector3 vecA,
                                 float fRadA,
                                 in Vector3 vecB,
                                 float fRadB,
                                 bool bRoundCap = true)
         {
-            _AddBeam(   m_hThis,
+            _AddBeam(m_hThis,
                         in vecA,
                         in vecB,
                         fRadA,
@@ -66,13 +66,13 @@ namespace Yurik
                         bRoundCap);
         }
 
-        public void AddBeam(    in Vector3 vecA,
+        public void AddBeam(in Vector3 vecA,
                                 in Vector3 vecB,
                                 float fRadA,
                                 float fRadB,
                                 bool bRoundCap = true)
         {
-            _AddBeam(   m_hThis,
+            _AddBeam(m_hThis,
                         in vecA,
                         in vecB,
                         fRadA,

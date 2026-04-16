@@ -57,7 +57,7 @@ namespace Yurik
             vecMax.Y = float.MinValue;
         }
 
-        public BBox2(   float fMinX,
+        public BBox2(float fMinX,
                         float fMinY,
                         float fMaxX,
                         float fMaxY)
@@ -78,7 +78,7 @@ namespace Yurik
         /// </summary>
         /// <param name="vecSetMin">Minimum Coord</param>
         /// <param name="vecSetMax">Maximum Coord</param>
-        public BBox2(   in Vector2 vecSetMin,
+        public BBox2(in Vector2 vecSetMin,
                         in Vector2 vecSetMax)
         {
             vecMin = vecSetMin;
@@ -114,7 +114,7 @@ namespace Yurik
             if (bIsEmpty())
                 return false;
 
-            if (    (vec.X < vecMin.X) ||
+            if ((vec.X < vecMin.X) ||
                     (vec.Y < vecMin.Y) ||
                     (vec.X > vecMax.X) ||
                     (vec.Y > vecMax.Y))
@@ -200,8 +200,8 @@ namespace Yurik
             return $"<Min: {vecMin} | Max: {vecMax}>";
         }
 
-        public Vector2 vecMin   = new();
-        public Vector2 vecMax   = new();
+        public Vector2 vecMin = new();
+        public Vector2 vecMax = new();
     }
 
     [StructLayout(LayoutKind.Sequential, Pack = 1)]
@@ -221,7 +221,7 @@ namespace Yurik
             vecMax.Z = float.MinValue;
         }
 
-        public BBox3(   float fMinX,
+        public BBox3(float fMinX,
                         float fMinY,
                         float fMinZ,
                         float fMaxX,
@@ -247,7 +247,7 @@ namespace Yurik
         /// </summary>
         /// <param name="vecSetMin">Minimum vector</param>
         /// <param name="vecSetMax">Maximum vector</param>
-        public BBox3(   in Vector3 vecSetMin,
+        public BBox3(in Vector3 vecSetMin,
                         in Vector3 vecSetMax)
         {
             vecMin = vecSetMin;
@@ -295,7 +295,7 @@ namespace Yurik
             if (bIsEmpty())
                 return false;
 
-            if (    (vec.X < vecMin.X) ||
+            if ((vec.X < vecMin.X) ||
                     (vec.Y < vecMin.Y) ||
                     (vec.Z < vecMin.Z) ||
                     (vec.X > vecMax.X) ||
@@ -336,7 +336,7 @@ namespace Yurik
             {
                 Include(oBox.vecMin);
                 Include(oBox.vecMax);
-            }  
+            }
         }
 
         /// <summary>
@@ -348,7 +348,7 @@ namespace Yurik
         {
             if (oBox.bIsEmpty())
                 return;
-                
+
             Include(new Vector3(oBox.vecMin.X, oBox.vecMin.Y, fZ));
             Include(new Vector3(oBox.vecMax.X, oBox.vecMax.Y, fZ));
         }
@@ -396,8 +396,8 @@ namespace Yurik
         /// <param name="fScale">How much does it need to be scaled?</param>
         /// <param name="vecOffset">How much does it need to be offset after scale</param>
         /// <returns></returns>
-        public BBox3 oFitInto(  in  BBox3   oBounds,
-                                out float   fScale,
+        public BBox3 oFitInto(in BBox3 oBounds,
+                                out float fScale,
                                 out Vector3 vecOffset)
         {
             Vector3 vecNewMin = vecMin;
@@ -428,7 +428,7 @@ namespace Yurik
         /// <returns>A random vector inside of this Bounding Box</returns>
         public Vector3 vecRandomVectorInside(ref Random oRand)
         {
-            return new Vector3( vecMin.X + oRand.NextSingle() * (vecMax.X - vecMin.X),
+            return new Vector3(vecMin.X + oRand.NextSingle() * (vecMax.X - vecMin.X),
                                 vecMin.Y + oRand.NextSingle() * (vecMax.Y - vecMin.Y),
                                 vecMin.Z + oRand.NextSingle() * (vecMax.Z - vecMin.Z));
 
@@ -440,7 +440,7 @@ namespace Yurik
         /// <returns>A 2D Bounding Box with the X/Y extent of this Bounding Box</returns>
         public BBox2 oAsBoundingBox2()
         {
-            return new BBox2(   vecMin.X, vecMin.Y, 
+            return new BBox2(vecMin.X, vecMin.Y,
                                 vecMax.X, vecMax.Y);
         }
 
@@ -453,7 +453,7 @@ namespace Yurik
             return $"<Min: {vecMin} | Max: {vecMax}>";
         }
 
-        public Vector3 vecMin   = new();
-        public Vector3 vecMax   = new();
+        public Vector3 vecMin = new();
+        public Vector3 vecMax = new();
     }
 }

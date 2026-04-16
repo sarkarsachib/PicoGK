@@ -41,7 +41,7 @@ namespace Yurik
 {
     public partial class Viewer
     {
-        public Viewer(  string strTitle,
+        public Viewer(string strTitle,
                         Vector2 vecSize,
                         LogFile oLog)
         {
@@ -75,15 +75,15 @@ namespace Yurik
             // garbage collector doesn't destroy them during the
             // lifetime of the objects
 
-            m_fnInfoCB          = InfoCB;
-            m_fnUpdateCB        = UpdateCB;
-            m_fnKeyPressedCB    = KeyPressedCB;
-            m_fnMouseMovedCB    = MouseMovedCB;
-            m_fnMouseButtonCB   = MouseButtonCB;
-            m_fnScrollWheelCB   = ScrollWheelCB;
-            m_fnWindowSizeCB    = WindowSizeCB;
+            m_fnInfoCB = InfoCB;
+            m_fnUpdateCB = UpdateCB;
+            m_fnKeyPressedCB = KeyPressedCB;
+            m_fnMouseMovedCB = MouseMovedCB;
+            m_fnMouseButtonCB = MouseButtonCB;
+            m_fnScrollWheelCB = ScrollWheelCB;
+            m_fnWindowSizeCB = WindowSizeCB;
 
-            m_hThis = _hCreate( strTitle,
+            m_hThis = _hCreate(strTitle,
                                 vecSize,
                                 m_fnInfoCB,
                                 m_fnUpdateCB,
@@ -92,7 +92,7 @@ namespace Yurik
                                 m_fnMouseButtonCB,
                                 m_fnScrollWheelCB,
                                 m_fnWindowSizeCB);
-         
+
             Debug.Assert(m_hThis != IntPtr.Zero);
         }
 
@@ -198,14 +198,14 @@ namespace Yurik
 
                 lock (m_oActions)
                 {
-                    m_oActions.Enqueue(new LoadLightSetupAction(    m_oLog,
+                    m_oActions.Enqueue(new LoadLightSetupAction(m_oLog,
                                                                     abyDiffuseData,
                                                                     abySpecularData));
                 }
             }
         }
 
-        public void Add(    in Voxels vox,
+        public void Add(in Voxels vox,
                             int nGroupID = 0)
         {
             lock (m_oActions)
@@ -222,7 +222,7 @@ namespace Yurik
             }
         }
 
-        public void Add(    Mesh msh,
+        public void Add(Mesh msh,
                             int nGroupID = 0)
         {
             lock (m_oActions)
@@ -239,7 +239,7 @@ namespace Yurik
             }
         }
 
-        public void Add(    PolyLine oPoly,
+        public void Add(PolyLine oPoly,
                             int nGroupID = 0)
         {
             lock (m_oActions)
@@ -281,7 +281,7 @@ namespace Yurik
             }
         }
 
-        public void SetGroupStatic( int nGroupID,
+        public void SetGroupStatic(int nGroupID,
                                     bool bStatic)
         {
             lock (m_oActions)
@@ -290,26 +290,26 @@ namespace Yurik
             }
         }
 
-        public void SetGroupMaterial    (int        nGroupID,
-                                        ColorFloat  clr,
-                                        float       fMetallic,
-                                        float       fRoughness)
+        public void SetGroupMaterial(int nGroupID,
+                                        ColorFloat clr,
+                                        float fMetallic,
+                                        float fRoughness)
         {
             lock (m_oActions)
             {
-                m_oActions.Enqueue(new SetGroupMaterialAction(  nGroupID,
+                m_oActions.Enqueue(new SetGroupMaterialAction(nGroupID,
                                                                 clr,
                                                                 fMetallic,
                                                                 fRoughness));
             }
         }
 
-        public void SetGroupMatrix( int nGroupID,
+        public void SetGroupMatrix(int nGroupID,
                                     Matrix4x4 mat)
         {
             lock (m_oActions)
             {
-                m_oActions.Enqueue(new SetGroupMatrixAction(    nGroupID,
+                m_oActions.Enqueue(new SetGroupMatrixAction(nGroupID,
                                                                 mat));
             }
         }
@@ -320,14 +320,14 @@ namespace Yurik
             RequestUpdate();
         }
 
-        public void AdjustViewAngles(   float fOrbitRelative,
+        public void AdjustViewAngles(float fOrbitRelative,
                                         float fElevationRelative)
         {
-            SetViewAngles(  m_fOrbit + fOrbitRelative,
+            SetViewAngles(m_fOrbit + fOrbitRelative,
                             m_fElevation + fElevationRelative);
         }
 
-        public void SetViewAngles(  float fOrbit,
+        public void SetViewAngles(float fOrbit,
                                     float fElevation)
         {
             m_fElevation = fElevation;
@@ -380,11 +380,11 @@ namespace Yurik
 
         bool m_bIdle = false;
 
-        public float m_fElevation   = 30.0f;
-        public float m_fOrbit       = 45.0f;
-        float m_fFov                = 45.0f;
-        float m_fZoom               = 1.0f;
-        bool m_bPerspective         = true;
+        public float m_fElevation = 30.0f;
+        public float m_fOrbit = 45.0f;
+        float m_fFov = 45.0f;
+        float m_fZoom = 1.0f;
+        bool m_bPerspective = true;
 
         int m_iMainThreadID = -1;
 
@@ -428,7 +428,7 @@ namespace Yurik
                 m_oMeshes.Add(msh);
             }
 
-            _AddMesh(   m_hThis,
+            _AddMesh(m_hThis,
                         nGroupID,
                         msh.m_hThis);
         }
@@ -465,7 +465,7 @@ namespace Yurik
 
                 m_oPolyLines.Remove(poly);
 
-                _RemovePolyLine(    m_hThis,
+                _RemovePolyLine(m_hThis,
                                     poly.m_hThis);
             }
 
@@ -473,27 +473,27 @@ namespace Yurik
             RequestUpdate();
         }
 
-        Matrix4x4 m_matModelTrans           = Matrix4x4.Identity;
-        Matrix4x4 m_matModelViewProjection  = Matrix4x4.Identity;
-        Matrix4x4 m_matModelViewStatic      = Matrix4x4.Identity;
-        Matrix4x4 m_matProjectionStatic     = Matrix4x4.Identity;
-        Matrix4x4 m_matStatic               = Matrix4x4.Identity;
-        Vector3 m_vecEye                    = new Vector3(1.0f);
-        Vector3 m_vecEyeStatic              = new Vector3(0f, 10f, 0f);
-        Vector2 m_vecPrevPos                = new();
-        bool m_bOrbit                       = false;
+        Matrix4x4 m_matModelTrans = Matrix4x4.Identity;
+        Matrix4x4 m_matModelViewProjection = Matrix4x4.Identity;
+        Matrix4x4 m_matModelViewStatic = Matrix4x4.Identity;
+        Matrix4x4 m_matProjectionStatic = Matrix4x4.Identity;
+        Matrix4x4 m_matStatic = Matrix4x4.Identity;
+        Vector3 m_vecEye = new Vector3(1.0f);
+        Vector3 m_vecEyeStatic = new Vector3(0f, 10f, 0f);
+        Vector2 m_vecPrevPos = new();
+        bool m_bOrbit = false;
 
         LogFile m_oLog;
 
         ///////// Internals
 
-        void InfoCB(    string strMessage,
+        void InfoCB(string strMessage,
                         bool bFatalError)
         {
             m_oLog.Log(strMessage);
         }
 
-        void UpdateCB(  IntPtr hViewer,
+        void UpdateCB(IntPtr hViewer,
                         in Vector2 vecViewport,
                         ref ColorFloat clrBackground,
                         ref Matrix4x4 matModelViewProjection,
@@ -533,25 +533,25 @@ namespace Yurik
                     }
                     else
                     {
-                        matProjection = Matrix4x4.CreateOrthographic(   m_oBBox.vecSize().X * 2,
+                        matProjection = Matrix4x4.CreateOrthographic(m_oBBox.vecSize().X * 2,
                                                                         m_oBBox.vecSize().Y * 2,
                                                                         0.1f,
                                                                         fFar);
                     }
 
-                    m_matModelViewStatic    = Utils.matLookAt(m_vecEyeStatic, new Vector3(0, 0, 0));
-                    m_matProjectionStatic   = Matrix4x4.CreateOrthographic(100f * vecViewport.X / vecViewport.Y, 100f, 0.1f, 100f);
+                    m_matModelViewStatic = Utils.matLookAt(m_vecEyeStatic, new Vector3(0, 0, 0));
+                    m_matProjectionStatic = Matrix4x4.CreateOrthographic(100f * vecViewport.X / vecViewport.Y, 100f, 0.1f, 100f);
 
                     m_matModelViewProjection = matModelView * matProjection;
                     m_matStatic = m_matModelViewStatic * m_matProjectionStatic;
                 }
 
-                vecEyeStatic                = m_vecEyeStatic;
-                vecEyePosition              = m_vecEye;
-                matStatic                   = m_matStatic;
-                matModelViewProjection      = m_matModelViewProjection;
-                matModelTransform           = m_matModelTrans;
-                clrBackground               = m_clrBackground;
+                vecEyeStatic = m_vecEyeStatic;
+                vecEyePosition = m_vecEye;
+                matStatic = m_matStatic;
+                matModelViewProjection = m_matModelViewProjection;
+                matModelTransform = m_matModelTrans;
+                clrBackground = m_clrBackground;
             }
 
             catch (Exception e)
@@ -625,7 +625,7 @@ namespace Yurik
             }
         }
 
-        void ScrollWheelCB( IntPtr hViewer,
+        void ScrollWheelCB(IntPtr hViewer,
                             in Vector2 vecScrollWheel,
                             in Vector2 vecMousePos)
         {
@@ -639,7 +639,7 @@ namespace Yurik
             RequestUpdate();
         }
 
-        void WindowSizeCB(  IntPtr hViewer,
+        void WindowSizeCB(IntPtr hViewer,
                             in Vector2 vecWindowSize)
         {
             Debug.Assert(hViewer == m_hThis);
@@ -648,4 +648,3 @@ namespace Yurik
         }
     }
 }
-    
